@@ -1,4 +1,4 @@
-git/node_modules
+src/node_modules/
 /venv
 .DS_Store
 src/dist/*
