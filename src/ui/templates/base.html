@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title%} Teckium {% endblock%}</title>
+    <link rel="stylesheet" href="{% static 'ui/css/style.css' %}">
+</head>
+<body>
+  {% include 'navbar.html' %}
+
+  
+  <div class="container">
+    {% block content %} {% endblock %}
+  </div>
+  
+
+  {% include 'footer.html' %}
+    
+  <script src="{% static 'ui/js/main.js' %}"></script>
+</body>
+</html>

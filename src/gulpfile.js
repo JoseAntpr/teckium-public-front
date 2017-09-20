@@ -14,9 +14,9 @@ var cssnano = require('cssnano');
 
 var sassConfig = {
     compileSassTaskName: 'compile-sass',
-    watchFiles: './assets/sass/*.sass',
+    watchFiles: './assets/sass/*.scss',
     src: './assets/sass/style.scss',
-    dest: './dist/',
+    dest: './ui/static/ui/css',
     sassOpts: {
         includePaths: ['./node_modules/bootstrap/scss']
     }
@@ -26,20 +26,20 @@ var jsConfig = {
     concatJsTaskName: 'concat-js',
     watchFiles: './assets/js/*js',
     src: './assets/js/main.js',
-    dest: './dist'
+    dest: './ui/static/ui/js'
 }
 
 var uglifyConfig = {
     uglifyTaskName: "uglify",
     src: './dist/main.js',
-    dest: './dist/'
+    dest: './ui/static/ui/js'
 
 }
 gulp.task("default",["compile-sass", "concat-js"], function(){
     
     notify().write("Iniciando Gulp")
     //Arrancar servidor browser sync
-    browser.init({
+    browserSync.init({
        proxy: "127.0.0.1:8000"
     });
     //Cuando haya cambios compila sass
@@ -49,7 +49,7 @@ gulp.task("default",["compile-sass", "concat-js"], function(){
     gulp.watch(jsConfig.watchFiles, [jsConfig.concatJsTaskName]);
 
     // Cuando se cambien html, recargamos navegador
-    gulp.watch('./*.html', function(){
+    gulp.watch('./ui/templates/**/*.html', function(){
         browserSync.reload();
         notify().write("Navegador recargado");
     });

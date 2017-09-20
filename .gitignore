@@ -1,5 +1,10 @@
 src/node_modules/
 /venv
 .DS_Store
-src/dist/*
+src/ui/static/ui/css/*
+src/ui/static/ui/js/*
 .vscode
+src/teckiumDjangoFront/__pycache__/
+src/static
+src/db.sqlite3
+*.pyc
