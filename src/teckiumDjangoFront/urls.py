@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from blogs.views import index, detail
+from blogs.views import index, detail, PostByCategory
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index, name="index"),
     url(r'^detail', detail, name="blog-detail"),
+    url(r'^category', PostByCategory, name="blog-category")
 ]

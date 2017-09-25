@@ -1,14 +1,22 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
+<div>
+    <img src="https://www.xfball.com/Content/img/profile-img-none.png" class="img-avatar float-left">
+    <div class="flex-column">
+        <div> <a> José Antonio Palacios</a> </div>
+        <div>
+            <time>25 sept</time>
+        </div>
+    </div>
+</div>
 <div class="card">
     <div class="card-header">
         Que articulazo
     </div>
+    <img class="card-img" src="http://brasa.art.br/wp-content/uploads/2014/05/thumb-default.png">
     <div class="card-body">
         Me como mierdas muy grandes con GO
-        
+
     </div>
 </div>
 
-{% include '../commets.html' %}
-{% endblock %}
+{% include '../commets.html' %} {% endblock %}
