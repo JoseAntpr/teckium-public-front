@@ -1,0 +1,29 @@
+.navbar {
+    height: 70px;
+    background-color: #fff;
+    box-shadow: 0px 2px 18px rgba(0,0,0,0.3);
+}
+
+a.logo {
+    color: #4caf50;
+    font-family: "Yellowtail";
+    font-size: 34px;
+    letter-spacing: 0px;
+    font-weight: 400;
+    margin: 0 30px;
+    cursor: pointer;
+
+    &:hover{
+        color: #43a047;
+    }
+}
+
+.nav-item{
+    .nav-link{
+        color: #5a5a5a;
+
+        &:hover{
+            color: #43a047;
+        }
+    }
+}
