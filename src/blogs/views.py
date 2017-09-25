@@ -7,3 +7,11 @@ def index(request):
 
 def detail(request):
     return render(request, "blogs/detail.html")
+
+
+def login(request):
+    return render(request, "login.html")
+
+
+def singin(request):
+    return render(request, "singin.html")
