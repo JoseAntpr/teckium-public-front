@@ -1,5 +1,7 @@
 src/node_modules/
+.idea/
 /venv
+env/
 .DS_Store
 src/ui/static/ui/css/*
 src/ui/static/ui/js/*

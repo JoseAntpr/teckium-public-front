@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teckium</title>
+    <link rel="stylesheet" href="{% static 'ui/css/style.css' %}">
+</head>
+<body>
+
+<div class="login-page">
+  <div class="form">
+    <h1>Teckium</h1>
+    <form class="login-form">
+      <input type="text" placeholder="username"/>
+      <input type="email" placeholder="email"/>
+      <input type="password" placeholder="password"/>
+      <input type="password" placeholder="repeat password"/>
+      <button>Sing in</button>
+      <p class="message">Are you registered? <a href="{% url 'login' %}">Log in</a></p>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

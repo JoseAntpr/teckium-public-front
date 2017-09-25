@@ -11,3 +11,11 @@ def detail(request):
 
 def PostByCategory(request):
     return render(request, "blogs/post_by_category.html")
+
+
+def login(request):
+    return render(request, "login.html")
+
+
+def singin(request):
+    return render(request, "singin.html")
