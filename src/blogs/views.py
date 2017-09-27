@@ -1,8 +1,14 @@
+import requests
 from django.shortcuts import render
 
 
 def index(request):
-    return render(request, "blogs/index.html")
+    blogs = requests.get("http://127.0.0.1:8001/api/1.0/blogs/")
+
+    context = {
+        'blogs': blogs.json()['results']
+    }
+    return render(request, "blogs/index.html", context)
 
 
 def detail(request):

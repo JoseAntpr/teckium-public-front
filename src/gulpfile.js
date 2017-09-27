@@ -12,13 +12,15 @@ var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var cssnano = require('cssnano');
 
+
 var sassConfig = {
     compileSassTaskName: 'compile-sass',
     watchFiles: './assets/sass/*.scss',
     src: './assets/sass/style.scss',
     dest: './ui/static/ui/css',
     sassOpts: {
-        includePaths: ['./node_modules/bootstrap/scss']
+        includePaths: ['./node_modules/bootstrap/scss',
+                        './node_modules/font-awesome/scss']
     }
 }
 
@@ -35,7 +37,7 @@ var uglifyConfig = {
     dest: './ui/static/ui/js'
 
 }
-gulp.task("default",["compile-sass", "concat-js"], function(){
+gulp.task("default",["compile-sass", "concat-js", "fonts"], function(){
     
     notify().write("Iniciando Gulp")
     //Arrancar servidor browser sync
@@ -94,4 +96,10 @@ gulp.task(uglifyConfig.uglifyTaskName, function(){
     .pipe(uglify())
     .pipe(gulp.dest(uglifyConfig.dest))
     .pipe(notify("JS Minificado"))
+});
+
+gulp.task('fonts', function(){
+     gulp.src('./node_modules/font-awesome/fonts/*')
+     .pipe(gulp.dest('./ui/static/ui/fonts'))
+
 });
