@@ -2,18 +2,19 @@
 
 
     <div class="row mb-3">
-        {% for blog in blogs%}
+        
+        {% for post in posts %}
         <div class="col-xl-4">
             <div class="card" style="width: 20rem;">
                 <img class="card-img-top" src="http://www.3ciemme.it/images/joomlart/demo/default.jpg" alt="Card image cap">
                 <div class="card-body">
-                    <h4 class="card-title">{{ blog.title }}</h4>
-                    <p class="card-text">{{ blog.description}}</p>
+                    <h4 class="card-title">{{ post.title }}</h4>
+                    <p class="card-text">{{ post.summary}}</p>
                 </div>
                 <div class="card-footer">
                     <div class="row justify-content-start">
                         <div class="col-2">
-                            <img src="{{ blog.logo }}" class="img-avatar float-left">
+                            <img src="{{ post.owner.profile.avatar }}" class="img-avatar float-left">
                         </div>
                         <div class="col-8">
                             <div> <a> José Antonio Palacios</a> </div>
@@ -29,68 +30,10 @@
 
                 </div>
             </div>
-
         </div>
+       
 
         {% endfor %}
-
-        <div class="col-xl-4">
-            <div class="card" style="width: 20rem;">
-                <img class="card-img-top" src="http://www.3ciemme.it/images/joomlart/demo/default.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <div class="card-footer">
-                    <div class="row justify-content-start">
-                        <div class="col-2">
-                            <img src="https://www.xfball.com/Content/img/profile-img-none.png" class="img-avatar float-left">
-                        </div>
-                        <div class="col-8">
-                            <div> <a> José Antonio Palacios</a> </div>
-                            <div>
-                                <time>25 sept</time>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-link"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-        <div class="col-xl-4">
-            <div class="card" style="width: 20rem;">
-                <img class="card-img-top" src="http://www.3ciemme.it/images/joomlart/demo/default.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <div class="card-footer">
-                    <div class="row justify-content-start">
-                        <div class="col-2">
-                            <img src="https://www.xfball.com/Content/img/profile-img-none.png" class="img-avatar float-left">
-                        </div>
-                        <div class="col-8">
-                            <div> <a> José Antonio Palacios</a> </div>
-                            <div>
-                                <time>25 sept</time>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-link"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
 
     </div>
     <div class="row mb-3">
