@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^category', PostByCategory, name="blog-category"),
 
     url(r'^login', login, name="login"),
-    url(r'^singin', singin, name="singin"),
+    url(r'^signin', singin, name="signin"),
 ]

@@ -18,6 +18,11 @@ a.logo {
     }
 }
 
+
+.navbar-nav .active>.nav-link, .navbar-nav .nav-link.active {
+    color: #4caf50;
+}
+
 .nav-item{
     .nav-link{
         color: #5a5a5a;
@@ -25,5 +30,10 @@ a.logo {
         &:hover{
             color: #43a047;
         }
+
+        .active{
+            color: #43a047;
+        }
+
     }
 }
