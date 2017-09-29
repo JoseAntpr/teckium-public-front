@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from blogs.views import index, detail, PostByCategory, login, singin
+from blogs.views import index, detail, PostByCategory
+from users.views import LoginView, singin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,6 +25,6 @@ urlpatterns = [
     url(r'^detail', detail, name="blog-detail"),
     url(r'^category', PostByCategory, name="blog-category"),
 
-    url(r'^login', login, name="login"),
+    url(r'^login', LoginView.as_view(), name="login"),
     url(r'^signin', singin, name="signin"),
 ]
