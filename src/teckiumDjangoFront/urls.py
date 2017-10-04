@@ -21,8 +21,8 @@ from blogs.views import index, detail, PostByCategory, login, singin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index, name="index"),
-    url(r'^detail', detail, name="blog-detail"),
-    url(r'^category', PostByCategory, name="blog-category"),
+    url(r'^detail', detail, name="post-detail"),
+    url(r'^tag/(?P<tag_pk>[0-9]+)$', PostByCategory, name="posts-tag"),
 
     url(r'^login', login, name="login"),
     url(r'^signin', singin, name="signin"),
