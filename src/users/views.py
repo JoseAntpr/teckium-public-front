@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 
-from users.api import tk_authenticate
+from users.requests_api import tk_authenticate
 from users.forms import LoginForm
 
 
@@ -37,7 +37,9 @@ class LoginView(View):
                 # Usuario autenticado
                 request.session["default-language"] = "es"
                 url = request.GET.get('next', 'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
-                return redirect(url)
+                response = redirect(url)
+                response.cookies['jwt'] = token['token']
+                return response
             else:
                 # Usuario no autenticadopero
                 messages.warning(request, 'Usuario o contraseña incorrecta.')
