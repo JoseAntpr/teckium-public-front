@@ -2,10 +2,13 @@ import requests
 import datetime
 from django.shortcuts import render
 
+from teckiumDjangoFront.settings import INFO_API
+
 
 def index(request):
-    posts = requests.get("http://127.0.0.1:8001/api/1.0/posts/?status=2")
-    tags = requests.get("http://127.0.0.1:8001/api/1.0/tags/")
+    #posts = requests.get(INFO_API.get("url") + INFO_API.get("version") + "posts/?status=2")
+    posts = requests.get(INFO_API.get("url") + INFO_API.get("version") + "posts/")
+    tags = requests.get(INFO_API.get("url") + INFO_API.get("version") + "tags/")
 
     context = {
         'posts': posts.json()['results'],
@@ -19,14 +22,13 @@ def detail(request):
 
 
 def PostByCategory(request, tag_pk):
-    params = {'status': '2', 'tag_pk': tag_pk}
+    #params = {'status': '2', 'tags': tag_pk}
+    params = {'tags': tag_pk}
     tag = requests.get(
-        "http://127.0.0.1:8001/api/1.0/tags/"+tag_pk+"/")
+        INFO_API.get("url") + INFO_API.get("version") + "tags/"+tag_pk+"/")
     posts = requests.get(
-        "http://127.0.0.1:8001/api/1.0/posts/", params=params)
-    tags = requests.get("http://127.0.0.1:8001/api/1.0/tags/")
-
-    print(tag.json())
+        INFO_API.get("url") + INFO_API.get("version") + "posts/", params=params)
+    tags = requests.get(INFO_API.get("url") + INFO_API.get("version") + "tags/")
 
     context = {
         'posts': posts.json()['results'],
