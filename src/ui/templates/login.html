@@ -8,12 +8,32 @@
 </head>
 <body>
 
+{% if messages %}
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
 <div class="login-page">
   <div class="form">
     <h1>Teckium</h1>
-    <form class="login-form">
-      <input type="text" placeholder="username"/>
-      <input type="password" placeholder="password"/>
+    <form class="login-form" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        {{ field.errors }}
+        {{ field }}
+      {% endfor %}
       <button>login</button>
       <p class="message">Not registered? <a href="{% url 'signin' %}">Create an account</a></p>
     </form>
@@ -21,4 +41,6 @@
 </div>
 
 </body>
+
+<script src="{% static 'ui/js/main.js' %}"></script>
 </html>

@@ -15,7 +15,6 @@ def index(request):
 
 
 def detail(request):
-    
     return render(request, "blogs/detail.html")
 
 
@@ -26,7 +25,7 @@ def PostByCategory(request, tag_pk):
     posts = requests.get(
         "http://127.0.0.1:8001/api/1.0/posts/", params=params)
     tags = requests.get("http://127.0.0.1:8001/api/1.0/tags/")
-    
+
     print(tag.json())
 
     context = {
@@ -35,12 +34,3 @@ def PostByCategory(request, tag_pk):
         'tag': tag.json()
     }
     return render(request, "blogs/post_by_category.html", context)
-
-
-def login(request):
-    return render(request, "login.html")
-
-
-def singin(request):
-    return render(request, "singin.html")
-

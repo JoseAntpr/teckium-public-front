@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blogs',
+    'users',
     'ui'
 ]
 
@@ -121,3 +122,14 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
+
+
+# Microservices URLs
+INFO_API = {
+    "url": "http://127.0.0.1:8001/api/",
+    "version": "1.0/"
+}
+
+INFO_Client = {
+    "url": "http://127.0.0.1:8000"
+}
