@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views import View
 
+from blogs.decorators import jwt_required
 from users.requests_api import tk_authenticate
 from users.forms import LoginForm
 
@@ -37,9 +39,8 @@ class LoginView(View):
                 # Usuario autenticado
                 request.session["default-language"] = "es"
                 url = request.GET.get('next', 'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
-                response = redirect(url)
-                response.cookies['jwt'] = token['token']
-                return response
+                request.session["jwt"] = token['token']
+                return redirect(url)
             else:
                 # Usuario no autenticadopero
                 messages.warning(request, 'Usuario o contraseña incorrecta.')
@@ -48,5 +49,35 @@ class LoginView(View):
         return render(request, 'login.html', context)
 
 
-def singin(request):
-    return render(request, "singin.html")
+class LogoutView(View):
+    @method_decorator(jwt_required)
+    def get(self, request, *args, **kwargs):
+        try:
+            del request.session['jwt']
+            url = request.GET.get('next', 'index')
+            return redirect(url)
+        except KeyError:
+            pass
+
+        url = request.GET.get('next', 'login')
+        return redirect(url)
+
+
+
+
+class SigninView(View):
+    @method_decorator(jwt_required)
+    def get(self, request, *args, **kwargs):
+        """
+        Presenta el formulario de login a un usuario
+        :param request: HttpRequest
+        :return: HttpResponse
+        """
+
+        print(kwargs['profile'])
+
+        '''context = {
+            'form': LoginForm()
+        }'''
+
+        return render(request, "signin.html")

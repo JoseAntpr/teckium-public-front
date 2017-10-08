@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from blogs.views import IndexView, DetailView, PostByCategoryView
-from users.views import LoginView, singin
+from users.views import LoginView, SigninView, LogoutView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,5 +26,7 @@ urlpatterns = [
     url(r'^tag/(?P<tag_pk>[0-9]+)$', PostByCategoryView.as_view(), name="posts-tag"),
 
     url(r'^login', LoginView.as_view(), name="login"),
-    url(r'^signin', singin, name="signin"),
+    url(r'^signin', SigninView.as_view(), name="signin"),
+    url(r'^logout', LogoutView.as_view(), name="logout"),
+
 ]
