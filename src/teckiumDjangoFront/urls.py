@@ -16,14 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from blogs.views import index, detail, PostByCategory
+from blogs.views import IndexView, DetailView, PostByCategoryView
 from users.views import LoginView, singin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index, name="index"),
-    url(r'^detail', detail, name="post-detail"),
-    url(r'^tag/(?P<tag_pk>[0-9]+)$', PostByCategory, name="posts-tag"),
+    url(r'^$', IndexView.as_view(), name="index"),
+    url(r'^detail', DetailView.as_view(), name="post-detail"),
+    url(r'^tag/(?P<tag_pk>[0-9]+)$', PostByCategoryView.as_view(), name="posts-tag"),
 
     url(r'^login', LoginView.as_view(), name="login"),
     url(r'^signin', singin, name="signin"),
