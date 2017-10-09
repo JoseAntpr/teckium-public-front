@@ -45,9 +45,7 @@ def create_user(data):
     '''
     try:
         r = requests.post(INFO_API.get("url") + INFO_API.get("version") + "users/", data=data)
-        print(r.status_code)
-        print(r.json())
-        if not r.status_code == 200:
+        if not r.status_code == 201:
             return None
 
         return r.json()

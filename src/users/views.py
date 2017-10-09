@@ -9,7 +9,6 @@ from users.forms import LoginForm, RegisterForm
 
 
 class LoginView(View):
-
     def get(self, request):
         """
         Presenta el formulario de login a un usuario
@@ -38,7 +37,8 @@ class LoginView(View):
             if token is not None:
                 # Usuario autenticado
                 request.session["default-language"] = "es"
-                url = request.GET.get('next', 'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
+                url = request.GET.get('next',
+                                      'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
                 request.session["jwt"] = token['token']
                 return redirect(url)
             else:
@@ -64,7 +64,7 @@ class LogoutView(View):
 
 
 class SigninView(View):
-    #@method_decorator(jwt_required)
+    # @method_decorator(jwt_required)
     def get(self, request, **kwargs):
         """
         Presenta el formulario de registro de un usuario
@@ -72,7 +72,7 @@ class SigninView(View):
         :return: HttpResponse
         """
 
-        #print(kwargs['user'])
+        # print(kwargs['user'])
 
         context = {
             'form': RegisterForm()
@@ -92,16 +92,26 @@ class SigninView(View):
         if form.is_valid():
             data = form.cleaned_data
 
-            request_data = create_user(data)
-            if token is not None:
-                # Usuario autenticado
-                request.session["default-language"] = "es"
-                url = request.GET.get('next', 'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
-                request.session["jwt"] = token['token']
-                return redirect(url)
+            if data.get('password') == data.get('password2'):
+                request_data = create_user(data)
+
+                if request_data is not None:
+                    data = {'username': data.get('username'),
+                            'password': data.get('password')}
+                    token = tk_authenticate(data)
+                    # Usuario autenticado
+                    request.session["default-language"] = "es"
+                    url = request.GET.get('next', 'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
+                    request.session["jwt"] = token['token']
+                    return redirect(url)
+                else:
+                    # Usuario no autenticadopero
+                    messages.warning(request, 'El usuario ya existe.')
+
             else:
                 # Usuario no autenticadopero
-                messages.warning(request, 'Usuario o contraseña incorrecta.')
+                messages.warning(request, 'Las contraseñas no conciden.')
+
         context['form'] = form
 
         return render(request, 'signin.html', context)
