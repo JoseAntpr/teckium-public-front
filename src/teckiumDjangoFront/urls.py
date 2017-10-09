@@ -22,7 +22,8 @@ from users.views import LoginView, singin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index, name="index"),
-    url(r'^detail', detail, name="post-detail"),
+    url(r'^(?P<blog_pk>[0-9]+)/(?P<post_pk>[0-9]+)', detail.as_view(),
+        name="post-detail"),
     url(r'^tag/(?P<tag_pk>[0-9]+)$', PostByCategory, name="posts-tag"),
 
     url(r'^login', LoginView.as_view(), name="login"),

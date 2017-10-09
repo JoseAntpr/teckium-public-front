@@ -1,6 +1,7 @@
 import requests
 import datetime
 from django.shortcuts import render
+from django.views import View
 
 from teckiumDjangoFront.settings import INFO_API
 
@@ -17,8 +18,10 @@ def index(request):
     return render(request, "blogs/index.html", context)
 
 
-def detail(request):
-    return render(request, "blogs/detail.html")
+class detail(View):
+    
+    def get(self, request, blog_pk, post_pk):
+        return render(request, "blogs/detail.html")
 
 
 def PostByCategory(request, tag_pk):
