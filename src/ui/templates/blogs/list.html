@@ -4,11 +4,7 @@
         
         <div class="col-xl-{% if posts|length >= 3%}4{%elif posts|length == 2%}6{%else%}12{% endif%}">
             <div class="card" >
-                {% if post.image is None%}
-                <img class="card-img-top" src="http://www.3ciemme.it/images/joomlart/demo/default.jpg" alt="Card image cap">
-                {% else %}
-                <img class="card-img-top" style="height: 178.98px;" src="{{post.image}}" alt="Card image cap">
-                {% endif %}
+                <img class="card-img-top" style="height: 178.98px;" src={% if post.image %} {{post.image}} {% else %} "http://www.3ciemme.it/images/joomlart/demo/default.jpg" {% endif %} alt="Card image cap">
                 <div class="card-body">
                     <a href="{% url 'post-detail' blog_pk=post.blog.id post_pk=post.id %}"><h4 class="card-title">{{ post.title }}</h4></a>
                     <p class="card-text">{{ post.summary}}</p>
@@ -16,7 +12,7 @@
                 <div class="card-footer">
                     <div class="row justify-content-start">
                         <div class="col-2">
-                            <img src="{{ post.blog.logo }}" class="img-avatar float-left">
+                            <img src={% if post.blog.logo %} {{ post.blog.logo }} {% else %} "https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" {% endif %} class="img-avatar float-left">
                         </div>
                         <div class="col-7">
                             <div> <a>{{ post.blog.title}}</a> </div>
