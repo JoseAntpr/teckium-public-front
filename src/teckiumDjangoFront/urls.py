@@ -21,16 +21,10 @@ from users.views import LoginView, SigninView, LogoutView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-<<<<<<< HEAD
-    url(r'^$', index, name="index"),
-    url(r'^(?P<blog_pk>[0-9]+)/(?P<post_pk>[0-9]+)', detail.as_view(),
-        name="post-detail"),
-    url(r'^tag/(?P<tag_pk>[0-9]+)$', PostByCategory, name="posts-tag"),
-=======
     url(r'^$', IndexView.as_view(), name="index"),
-    url(r'^detail', DetailView.as_view(), name="post-detail"),
+    url(r'^(?P<blog_pk>[0-9]+)/(?P<post_pk>[0-9]+)', DetailView.as_view(),
+        name="post-detail"),
     url(r'^tag/(?P<tag_pk>[0-9]+)$', PostByCategoryView.as_view(), name="posts-tag"),
->>>>>>> d19782e05c54691ef6dfa57b337fc902d2d27326
 
     url(r'^login', LoginView.as_view(), name="login"),
     url(r'^signin', SigninView.as_view(), name="signin"),
