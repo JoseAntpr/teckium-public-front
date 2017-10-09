@@ -14,17 +14,24 @@
       {% endfor%}
     </ul>
     <ul class="navbar-nav">
+      {% if user %}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Nombre <img src="https://www.accountingweb.co.uk/sites/all/modules/custom/sm_pp_user_profile/img/default-user.png" class="rounded-circle img-profile-menu" />
+          {{ user.username | capfirst }} <img src={{ user.profile.avatar }} class="rounded-circle img-profile-menu" />
 
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="nav-link" href="{% url 'login' %}">Profile</a>
-          <a class="nav-link" href="{% url 'login' %}">Login</a>
-          <a class="nav-link" href="{% url 'signin' %}">Signin</a>
-          <a class="nav-link" href="#">Cerrar</a>
+          <a class="nav-link" href="{% url 'logout' %}">Cerrar</a>
         </div>
       </li>
+      {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'signin' %}">Signin</a>
+        </li>
+      {% endif%}
     </ul>
 </nav>
