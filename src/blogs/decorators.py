@@ -16,7 +16,7 @@ def jwt_required(function):
                 # Verifica si el token es correcto
                 r = requests.post(INFO_API.get("url") + INFO_API.get("version") + "token-verify/", data=token)
                 data = r.json()
-                if r.status_code == 200 and data.get('token'):
+                if r.status_code == 200:
                     print("token-verify: ", r.status_code)
                     print("token-verify: ", data)
                     kwargs['token'] = data['token']

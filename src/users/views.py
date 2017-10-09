@@ -4,12 +4,11 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from blogs.decorators import jwt_required
-from users.requests_api import tk_authenticate
-from users.forms import LoginForm
+from users.requests_api import tk_authenticate, create_user
+from users.forms import LoginForm, RegisterForm
 
 
 class LoginView(View):
-
     def get(self, request):
         """
         Presenta el formulario de login a un usuario
@@ -38,7 +37,8 @@ class LoginView(View):
             if token is not None:
                 # Usuario autenticado
                 request.session["default-language"] = "es"
-                url = request.GET.get('next', 'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
+                url = request.GET.get('next',
+                                      'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
                 request.session["jwt"] = token['token']
                 return redirect(url)
             else:
@@ -63,21 +63,55 @@ class LogoutView(View):
         return redirect(url)
 
 
-
-
 class SigninView(View):
-    @method_decorator(jwt_required)
-    def get(self, request, *args, **kwargs):
+    # @method_decorator(jwt_required)
+    def get(self, request, **kwargs):
         """
-        Presenta el formulario de login a un usuario
+        Presenta el formulario de registro de un usuario
         :param request: HttpRequest
         :return: HttpResponse
         """
 
-        print(kwargs['profile'])
+        # print(kwargs['user'])
 
-        '''context = {
-            'form': LoginForm()
-        }'''
+        context = {
+            'form': RegisterForm()
+        }
 
-        return render(request, "signin.html")
+        return render(request, 'signin.html', context)
+
+    def post(self, request):
+        """
+        Hace el registro de un usuario
+        :param request: HttpRequest
+        :return: HttpResponse
+        """
+
+        form = RegisterForm(request.POST)
+        context = dict()
+        if form.is_valid():
+            data = form.cleaned_data
+
+            if data.get('password') == data.get('password2'):
+                request_data = create_user(data)
+
+                if request_data is not None:
+                    data = {'username': data.get('username'),
+                            'password': data.get('password')}
+                    token = tk_authenticate(data)
+                    # Usuario autenticado
+                    request.session["default-language"] = "es"
+                    url = request.GET.get('next', 'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
+                    request.session["jwt"] = token['token']
+                    return redirect(url)
+                else:
+                    # Usuario no autenticadopero
+                    messages.warning(request, 'El usuario ya existe.')
+
+            else:
+                # Usuario no autenticadopero
+                messages.warning(request, 'Las contraseñas no conciden.')
+
+        context['form'] = form
+
+        return render(request, 'signin.html', context)
