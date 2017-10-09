@@ -35,3 +35,21 @@ def tk_refresh(token):
         return None
     except requests.exceptions.ConnectionError:
         return None
+
+
+def create_user(data):
+    '''
+    se envian un usuario y contraseña y devuelve un token si está ok
+    :param data: json con username y password
+    :return: json con token
+    '''
+    try:
+        r = requests.post(INFO_API.get("url") + INFO_API.get("version") + "users/", data=data)
+        print(r.status_code)
+        print(r.json())
+        if not r.status_code == 200:
+            return None
+
+        return r.json()
+    except ConnectionError:
+        return None
