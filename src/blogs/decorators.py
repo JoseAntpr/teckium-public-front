@@ -7,7 +7,7 @@ from teckiumDjangoFront.settings import INFO_API
 
 def jwt_required(function):
     def wrap(request, *args, **kwargs):
-        token = request.session["jwt"]
+        token = request.session.get("jwt", None)
 
         if token:
             token = {'token': token}
