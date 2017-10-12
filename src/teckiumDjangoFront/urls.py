@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from blogs.views import IndexView, DetailView, PostByCategoryView
-from users.views import LoginView, SigninView, LogoutView
+from users.views import LoginView, SigninView, LogoutView, ProfileView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,5 +29,5 @@ urlpatterns = [
     url(r'^login', LoginView.as_view(), name="login"),
     url(r'^signin', SigninView.as_view(), name="signin"),
     url(r'^logout', LogoutView.as_view(), name="logout"),
-
+    url(r'^profile', ProfileView.as_view(), name="profile"),
 ]

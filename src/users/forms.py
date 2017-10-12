@@ -21,3 +21,23 @@ class RegisterForm(forms.Form):
         # Always return a value to use as the new cleaned data, even if
         # this method didn't change it.
         return data.get('password')'''
+
+
+class UserForm(forms.Form):
+    username = forms.CharField(required=False,
+                               widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': 'Username'}))
+    first_name = forms.CharField(required=False,
+                               widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': 'First name'}))
+    last_name = forms.CharField(required=False,
+                               widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': 'Last name'}))
+    email = forms.CharField(required=False,
+                            widget=forms.EmailInput(attrs={'class': "form-control", 'placeholder': 'Email'}))
+    password = forms.CharField(required=False,
+                               widget=forms.PasswordInput(attrs={'class': "form-control", 'placeholder': 'Password'}))
+
+
+class ProfileForm(forms.Form):
+    avatar = forms.FileField(required=False,
+                               widget=forms.FileInput(attrs={'class': "form-control-file", 'placeholder': 'Avatar'}))
+    bio = forms.CharField(required=False,
+                               widget=forms.Textarea(attrs={'class': "form-control", 'placeholder': 'Bio'}))
