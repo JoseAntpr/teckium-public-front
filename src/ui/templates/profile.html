@@ -1,0 +1,77 @@
+{% extends 'base.html' %} 
+{% block content %}
+<h1>Profile</h1>
+
+<div class="row ">
+    <div class="col-12">
+        <div class="rela-block profile-card">
+            <div><img src={% if user.profile.avatar %}{{ user.profile.avatar }} {% else %} "https://www.accountingweb.co.uk/sites/all/modules/custom/sm_pp_user_profile/img/default-user.png" {% endif %} class="rounded-circle profile-pic" /></div>
+                <div class="rela-block profile-name-container">
+                    <div class="rela-block user-name" id="user_name">{% if user.first_name and user.last_name %}{{ user.first_name | capfirst }} {{ user.last_name | capfirst }}{% else %} {{ user.username | capfirst }} {% endif %}</div>
+                    <div class="rela-block user-desc" id="user_description">{% if user.profile.bio %}{{ user.profile.bio }} {% else %} No hay biografía {% endif %}</div>
+                </div>
+                <div class="rela-block profile-card-stats">
+                    <div class="floated profile-stat works" id="num_works">28<br><p class="element">posts</p> </div>
+                    <div class="floated profile-stat works" id="num_blogs">1<br><p class="element">blogs</p> </div>
+                    <div class="floated profile-stat followers" id="num_followers">112<br><p class="element">followers</p></div>
+                    <div class="floated profile-stat following" id="num_following">245<br><p class="element">following</p></div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+{% if messages %}
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<form method="post" enctype='multipart/form-data'>
+    <div class="row">
+          <div class="col-md-12 col-lg-6">
+            {% csrf_token %}
+                {% for field in userForm %}
+                <div class="form-group row ">
+                    {{ field.errors }}
+                    <label class="col-md-3 col-form-label">{{ field.label_tag }}</label>
+                    <div class="col-md-8">
+                    {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+          </div>
+          <div class="col-md-12 col-lg-6">
+            {% csrf_token %}
+                {% for field in profileForm %}
+                <div class="form-group row">
+                    {{ field.errors }}
+                    <label class="col-md-3 col-form-label">{{ field.label_tag }}</label>
+                    <div class="col-md-8">
+                    {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+
+          </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+</form>
+
+
+{% endblock %}

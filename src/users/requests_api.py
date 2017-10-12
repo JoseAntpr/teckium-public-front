@@ -1,5 +1,6 @@
 import requests
 from django.contrib import messages
+from django.core.serializers import json
 
 from teckiumDjangoFront.settings import INFO_API, INFO_Client
 
@@ -50,4 +51,38 @@ def create_user(data):
 
         return r.json()
     except ConnectionError:
+        return None
+
+
+def get_profile(user_id):
+    """
+    Consulta el API y obtiene los valores del perfil del usuario
+    :return: Json recibido
+    """
+    try:
+        r = requests.get(INFO_API.get("url") + INFO_API.get("version") + 'users/' + user_id)
+        if r.status_code == 200:
+            configuration = r.json()
+            return json.dumps(configuration, indent=4)
+        else:
+            return None
+    except requests.exceptions.ConnectionError:
+        return None
+
+
+def put_profile(user_id, json):
+    """
+    Actualiza los valores del perfil del usuario
+    :param json: Archivo json con la configuración del recomendador
+    :return: None si hay algun problema y el status code si esta ok
+    """
+    print(user_id)
+    try:
+        r = requests.put(INFO_API.get("url") + INFO_API.get("version") + "users/" + str(user_id) + "/", data=json)
+        print(r)
+        if r.status_code == 200:
+            return r.status_code
+        else:
+            return None
+    except requests.exceptions.ConnectionError:
         return None

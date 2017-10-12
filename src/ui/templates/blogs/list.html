@@ -17,7 +17,8 @@
                         <div class="col-7">
                             <div> <a>{{ post.blog.title}}</a> </div>
                             <div>
-                                <time>{{ post.publication_date}}</time>
+                                {{ post.publication_date }}
+                                {{ post.publication_date|date }}
                             </div>
                         </div>
                         <div class="col-1">
