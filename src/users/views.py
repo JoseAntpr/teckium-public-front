@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from blogs.decorators import jwt_required
-from users.requests_api import tk_authenticate, create_user
+from users.requests_api import tk_authenticate, create_user, tk_refresh
 from users.forms import LoginForm, RegisterForm
 
 
@@ -15,6 +15,17 @@ class LoginView(View):
         :param request: HttpRequest
         :return: HttpResponse
         """
+
+        token = request.session.get("jwt", None)
+        new_token = None
+        if token:
+            token = {'token': token}
+            data = tk_refresh(token)
+            if data:
+                new_token = data['token']
+                request.session["jwt"] = new_token
+                url = request.GET.get('next', 'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
+                return redirect(url)
 
         context = {
             'form': LoginForm()
@@ -64,7 +75,7 @@ class LogoutView(View):
 
 
 class SigninView(View):
-    # @method_decorator(jwt_required)
+    #@method_decorator(jwt_required)
     def get(self, request, **kwargs):
         """
         Presenta el formulario de registro de un usuario
@@ -72,7 +83,17 @@ class SigninView(View):
         :return: HttpResponse
         """
 
-        # print(kwargs['user'])
+        #print(kwargs['user'])
+        token = request.session.get("jwt", None)
+        new_token = None
+        if token:
+            token = {'token': token}
+            data = tk_refresh(token)
+            if data:
+                new_token = data['token']
+                request.session["jwt"] = new_token
+                url = request.GET.get('next', 'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
+                return redirect(url)
 
         context = {
             'form': RegisterForm()

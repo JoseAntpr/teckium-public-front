@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const moment = require("moment");
 moment.locale('es');
 const $ = require("jquery");
@@ -18,3 +19,6 @@ module.exports = {
     });
   }
 };
+=======
+var moment = require('moment')
+>>>>>>> 7765296a89aa97a4d4a6ea73de64119c4d74976f
