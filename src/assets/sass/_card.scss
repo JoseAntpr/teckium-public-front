@@ -1,0 +1,128 @@
+.card-footer {
+  background-color: #fff;
+  border-top: none;
+  .footer-info {
+    display: flex;
+    flex-direction: row;
+
+    .blog-img {
+      padding-right: 10px;
+    }
+
+    .blog-info {
+      .publication-date {
+        font-size: 13px;
+        color: rgba(78, 76, 76, 0.54);
+      }
+      .blog-title {
+        font-size: 14px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+
+    .blog-stats {
+      margin-left: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+
+      .btn-link {
+        padding-right: 2px;
+
+        i:before {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
+
+.card-detail {
+  padding: 3em 3em 1em 3em;
+
+  header {
+    display: flex;
+    padding: 3.75em 3em 1.25em 3em;
+    margin: -3em 0 3em;
+    flex-direction: column;
+    border-bottom: solid 1px rgba(160, 160, 160, 0.3);
+
+    .title-detail {
+      margin: 0 0 2em 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 0 2em 0;
+    }
+
+    a {
+      border-left: solid 1px rgba(160, 160, 160, 0.3);
+      margin-left: 2em;
+      padding-left: 2em;
+      .name {
+        margin: 0 0 0 1.5em;
+        border-bottom: dotted 1px rgba(160, 160, 160, 0.3);
+      }
+    }
+  }
+  .card-img {
+    margin: 0 0 3em 0;
+  }
+  .card-body {
+    margin: 0 0 2em 0;
+  }
+
+  .card-footer {
+    margin: 0 0 2em 0;
+    .tags {
+      list-style: none;
+      padding: 0;
+
+      li {
+        font-size: 15px;
+        display: inline-block;
+        border-radius: 3px;
+        padding: 5px 10px;
+        background: rgba(168, 162, 162, 0.658);
+        a{
+            color:inherit;
+            text-decoration: none;
+        }
+      }
+      li:hover {
+        background: rgba(168, 162, 162, 0.541);
+      }
+    }
+  }
+}
+
+.card-comment{
+
+    .meta{
+        display: flex;
+        align-items: center;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(168, 162, 162, 0.541);
+        .author{
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            margin-left: 15px;
+        }
+    }
+    .content{
+        float: left;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+}

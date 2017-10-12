@@ -1,0 +1,31 @@
+<div class="comment-container">
+
+    <h3>Comentarios</h3>
+
+    {% if user%}
+
+    <form class="mt-5">
+        <div class="form-group">
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Escribe un comentario">
+        </div>
+    </form>
+    {% endif %}
+
+    {%for comment in comments %}
+    <div class="card mb-3 card-comment">
+        <div class="card-body">
+            <div class="meta">
+                <img src={% if comment.owner.profile.avatar %} {{ comment.owner.profile.avatar }} {% else %}
+                    "https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" {% endif %} class="img-avatar">
+                <div class="author">
+                    <a>{{ comment.owner.username }}</a>
+                    <time class="publication-date">{{ comment.publication_date}}</time>
+                </div>
+            </div>
+            <div class="content">
+                {{ comment.content }}
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}

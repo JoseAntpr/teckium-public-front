@@ -1,39 +1,49 @@
 <section class="row">
-        <div class="row">
-        {% for post in posts %}
-        
-        <div class="col-xl-{% if posts|length >= 3%}4{%elif posts|length == 2%}6{%else%}12{% endif%}">
-            <div class="card" >
-                <img class="card-img-top" style="height: 178.98px;" src={% if post.image %} {{post.image}} {% else %} "http://www.3ciemme.it/images/joomlart/demo/default.jpg" {% endif %} alt="Card image cap">
-                <div class="card-body">
-                    <a href="{% url 'post-detail' blog_pk=post.blog.id post_pk=post.id %}"><h4 class="card-title">{{ post.title }}</h4></a>
-                    <p class="card-text">{{ post.summary}}</p>
-                </div>
-                <div class="card-footer">
-                    <div class="row justify-content-start">
-                        <div class="col-2">
-                            <img src={% if post.blog.logo %} {{ post.blog.logo }} {% else %} "https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" {% endif %} class="img-avatar float-left">
-                        </div>
-                        <div class="col-7">
-                            <div> <a>{{ post.blog.title}}</a> </div>
-                            <div>
-                                <time>{{ post.publication_date}}</time>
+    <div class="row">
+        <div class="card-deck">
+            {% for post in posts %}
+
+            <div class="col-lg-{% if posts|length >= 3%}4{%elif posts|length == 2%}6{%else%}12{% endif%} col-md-12 col-sm-12 col-12 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top" style="height: 178.98px;" src={% if post.image %} {{post.image}} {% else %}
+                        "http://www.3ciemme.it/images/joomlart/demo/default.jpg" {% endif %} alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{% url 'post-detail' blog_pk=post.blog.id post_pk=post.id %}">
+                            <h4 class="card-title">{{ post.title }}</h4>
+                        </a>
+                        <p class="card-text">{{ post.summary}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="footer-info">
+                            <div class="blog-img">
+                                <img src={% if post.blog.logo %} {{ post.blog.logo }} {% else %}
+                                    "https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" {% endif %} class="img-avatar float-left">
                             </div>
-                        </div>
-                        <div class="col-1">
-                            <button class="btn btn-link"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
-                        </div>
-                        <div class="col-1">    
-                            <button class="btn btn-link"><i class="fa fa-comments" aria-hidden="true"></i></button>
+                            <div class="blog-info">
+                                <div class="blog-title">
+                                    <a>{{ post.blog.title}}</a>
+                                </div>
+                                <div>
+                                    <time class="publication-date">{{ post.publication_date}}</time>
+                                </div>
+                            </div>
+                            <div class="blog-stats">
+                                <button class="btn btn-link">
+                                    <i class="fa fa-bookmark" aria-hidden="true">7</i>
+                                </button>
+                                <button class="btn btn-link">
+                                        <i class="fa fa-comments" aria-hidden="true">8</i>
+                                    </button>
+                            </div>
+
                         </div>
 
                     </div>
-
                 </div>
             </div>
+
+            {% endfor %}
         </div>
-       
-        {% endfor %}
     </div>
 
 
