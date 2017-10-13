@@ -70,16 +70,20 @@ def get_profile(user_id):
         return None
 
 
-def put_profile(user_id, json):
+def put_profile(user_id, file, json):
     """
     Actualiza los valores del perfil del usuario
     :param json: Archivo json con la configuración del recomendador
     :return: None si hay algun problema y el status code si esta ok
     """
     print(user_id)
+    print(json)
+
     try:
-        r = requests.put(INFO_API.get("url") + INFO_API.get("version") + "users/" + str(user_id) + "/", data=json)
-        print(r)
+        if file.get('profile.avatar'):
+            r = requests.put(INFO_API.get("url") + INFO_API.get("version") + "users/" + str(user_id) + "/", files=file, data=json)
+        else:
+            r = requests.put(INFO_API.get("url") + INFO_API.get("version") + "users/" + str(user_id) + "/", data=json)
         if r.status_code == 200:
             return r.status_code
         else:

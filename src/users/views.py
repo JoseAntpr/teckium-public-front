@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from blogs.decorators import jwt_required
+from blogs.requests_api import get_tags
 from users.requests_api import tk_authenticate, create_user, tk_refresh, put_profile
 from users.forms import LoginForm, RegisterForm, ProfileForm, UserForm
 
@@ -152,10 +153,12 @@ class ProfileView(View):
         """
 
         user = kwargs['user']
+        tags = get_tags()
 
         context = {
             'userForm': UserForm(user),
             'profileForm': ProfileForm(user.get('profile')),
+            'tags': tags['results'],
             'user': user
         }
 
@@ -169,6 +172,7 @@ class ProfileView(View):
         :return: HttpResponse
         """
         user = kwargs['user']
+        tags = get_tags()
 
         userForm = UserForm(request.POST)
         profileForm = ProfileForm(request.POST, request.FILES)
@@ -176,44 +180,24 @@ class ProfileView(View):
         context = dict()
         if userForm.is_valid() and profileForm.is_valid():
             context = userForm.cleaned_data
-            context['profile'] = profileForm.cleaned_data
+            file = {
+                'profile.avatar': profileForm.cleaned_data.get('avatar')
+            }
+            context['profile.bio'] = profileForm.cleaned_data.get('bio')
 
-            if context.get('password'):
-                context['password'] = context.get('password')
-            else:
-                del context['password']
-
-            print(context)
-
-            #data_json = json.dumps(context, indent=4)
-            #print(data_json)
-
-            result = put_profile(user.get('id'), context)
-
-            print(result)
+            result = put_profile(user.get('id'), file, context)
 
             if result:
                 messages.success(request, "Se ha actualizado correctamente.")
 
                 return HttpResponseRedirect(reverse('profile'))
             else:
-                messages.warning(request, "No se ha podido actualizar porque el API no esta disponible.")
-
-            data = userForm.cleaned_data
-            '''token = tk_authenticate(data)
-            if token is not None:
-                # Usuario autenticado
-                url = request.GET.get('next',
-                                      'index')  # Permite redirigir a la url desde donde venga el usuario al hacer login
-                request.session["jwt"] = token['token']
-                return redirect(url)
-            else:
-                # Usuario no autenticadopero
-                messages.warning(request, 'Usuario o contraseña incorrecta.')'''
+                messages.warning(request, "No se ha podido actualizar.")
 
         context = {
             'userForm': userForm,
             'profileForm': profileForm,
+            'tags': tags['results'],
             'user': user
         }
 
