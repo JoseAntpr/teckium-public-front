@@ -47,6 +47,20 @@ def get_comments(filters):
     except ConnectionError:
         return None
 
+def create_comment(data):
+    try:
+        print("*********************************")
+        print(data)
+        print("*********************************")
+        r = requests.post(INFO_API.get("url") + INFO_API.get("version") + 
+                         "comments/", data=data)
+        if not r.status_code == 201:
+            return None
+    
+        return r.json()
+    except ConnectionError:
+        return None
+
 
 def get_tags(*argv):
 

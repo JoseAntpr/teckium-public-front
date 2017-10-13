@@ -4,15 +4,15 @@
 
     {% if user%}
 
-    <form class="mt-5">
+    <form class="mt-5 mb-5" method="post">
+        {% csrf_token %}
         <div class="form-group">
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Escribe un comentario">
+            {{ form.content.errors }} {{ form.content }}
         </div>
+        <button type="submit" class="btn btn-primary">Publicar</button>
     </form>
-    {% endif %}
-
-    {%for comment in comments %}
-    <div class="card mb-3 card-comment">
+    {% endif %} {%for comment in comments %}
+    <div id="comments" class="card mb-3 card-comment">
         <div class="card-body">
             <div class="meta">
                 <img src={% if comment.owner.profile.avatar %} {{ comment.owner.profile.avatar }} {% else %}
@@ -29,3 +29,5 @@
         </div>
     </div>
     {% endfor %}
+
+    
