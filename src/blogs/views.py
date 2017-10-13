@@ -5,8 +5,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 
-from blogs.requests_api import get_posts, get_tags, get_post, get_comments
+from blogs.requests_api import get_posts, get_tags, get_post, get_comments, create_comment
 from users.requests_api import tk_refresh
+from blogs.forms import CommentForm
 
 
 class IndexView(View):
@@ -55,18 +56,52 @@ class DetailView(View):
         post = get_post(post_pk)
         tags = get_tags()
         comments = get_comments(params)
-        print(comments['results'])
+       
 
         context = {
             'post': post,
             'tags': tags['results'],
             'user': user,
-            'comments': comments['results']
+            'comments': comments['results'],
+            'form':  CommentForm()
         }
 
         if new_token:
             request.session["jwt"] = new_token
 
+        return render(request, "blogs/detail.html", context)
+
+    def post(self, request, blog_pk, post_pk):
+        form = CommentForm(request.POST)
+        token = request.session.get('jwt',None)
+        user = []
+        new_token = None
+        if token:
+            token = {'token': token}
+            data = tk_refresh(token)
+            if data:
+                user = data['user']
+                new_token = data['token']
+
+        if form.is_valid():
+            data = {'content': form.cleaned_data.get('content'),
+                    'owner.username': user.get('username'),
+                    'post': post_pk}
+            create_comment(data)
+
+        params = {"post": post_pk}
+        post = get_post(post_pk)
+        tags = get_tags()
+        comments = get_comments(params)
+        
+        context = {
+            'post': post,
+            'tags': tags['results'],
+            'user': user,
+            'comments': comments['results'],
+            'form':  CommentForm()
+        }
+            
         return render(request, "blogs/detail.html", context)
 
 
