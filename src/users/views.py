@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from blogs.decorators import jwt_required
-from blogs.requests_api import get_tags
+from blogs.requests_api import get_tags, get_posts
 from users.requests_api import tk_authenticate, create_user, tk_refresh, put_profile
 from users.forms import LoginForm, RegisterForm, ProfileForm, UserForm
 
@@ -155,9 +155,13 @@ class ProfileView(View):
         user = kwargs['user']
         tags = get_tags()
 
+        params = {'owner': user.get('id')}
+        posts = get_posts(params)
+
         context = {
             'userForm': UserForm(user),
             'profileForm': ProfileForm(user.get('profile')),
+            'posts': posts['results'],
             'tags': tags['results'],
             'user': user
         }
@@ -173,6 +177,9 @@ class ProfileView(View):
         """
         user = kwargs['user']
         tags = get_tags()
+
+        params = {'owner': user.get('id')}
+        posts = get_posts(params)
 
         userForm = UserForm(request.POST)
         profileForm = ProfileForm(request.POST, request.FILES)
@@ -197,6 +204,7 @@ class ProfileView(View):
         context = {
             'userForm': userForm,
             'profileForm': profileForm,
+            'posts': posts['results'],
             'tags': tags['results'],
             'user': user
         }
