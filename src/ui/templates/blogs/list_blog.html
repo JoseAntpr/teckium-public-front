@@ -6,38 +6,52 @@
 
     <div class="col-md-12 col-12">
         <article class="post">
-        <header>
-            <div class="title">
-                <h2><a href="{% url 'post-detail' blog_pk=post.blog.id post_pk=post.id %}">{{ post.title }}</a></h2>
-                <p>{{ post.summary}}</p>
-            </div>
-            <div class="meta">
-                <time class="published ">{{ post.publication_date}} </time>
-                <a href="#" class="author"><span class="name">{{ post.blog.title}}</span><img src={% if post.blog.logo %} {{ post.blog.logo }} {% else %}
-                                        "https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" {% endif %} class="border-tlr-radius"></a>
-            </div>
-        </header>
-        <a href="#" class="image featured"><img src={% if post.image %} {{post.image}} {% else %} "http://lorempixel.com/400/200/sports/" {% endif %} alt="" /></a>
-        <p>{% if post.content %} {{post.content}} {% else %} Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. {% endif %} </p>
-        <footer>
-            <ul class="actions">
-                <li><a href="#" class="button big">Continue Reading</a></li>
-            </ul>
-            <ul class="stats">
-                <li><a href="#">{{ post.tags }}{% for tag in post.tags %} {{ tag.name }} {% endfor %} Web Design </a></li>
-                <li>
-                    <button class="btn btn-link">
-                        <i class="fa fa-bookmark" aria-hidden="true"> 7</i>
-                    </button>
-                </li>
-                <li>
-                    <button class="btn btn-link">
-                        <i class="fa fa-comments" aria-hidden="true"> 8</i>
-                    </button>
-                </li>
-            </ul>
-        </footer>
-    </article>
+            <header>
+                <div class="title">
+                    <h2>
+                        <a href="{% url 'post-detail' blog_pk=post.blog.id post_pk=post.id %}">{{ post.title }}</a>
+                    </h2>
+                    <p>{{ post.summary}}</p>
+                </div>
+                <div class="meta">
+                    <time class="publication-date">{{ post.publication_date }}</time>
+                    <a href="#" class="author">
+                        <span class="name">{{ post.blog.title}}</span>
+                        <img src={% if post.blog.logo %} {{ post.blog.logo }} {% else %}
+                            "https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" {% endif %} class="border-tlr-radius">
+                    </a>
+                </div>
+            </header>
+            <a href="#" class="image featured">
+                <img src={% if post.image %} {{post.image}} {% else %} "http://lorempixel.com/400/200/sports/" {% endif %} alt=""
+                />
+            </a>
+            <p>{% if post.content %} {{post.content}} {% else %} Mauris neque quam, fermentum ut nisl vitae, convallis maximus
+                nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus
+                at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae
+                justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. {% endif %} </p>
+            <footer>
+                <ul class="actions">
+                    <li>
+                        <a href="#" class="button big">Continue Reading</a>
+                    </li>
+                </ul>
+                <ul class="stats">
+                    {% for tag in post.tags %}
+                    <li>
+                        <a href="#"> {{ tag.name }} </a>
+                    </li>{% endfor %}
+                    <li>
+                        <button class="btn btn-link">
+                            <i class="fa fa-bookmark" aria-hidden="true"> 7</i>
+                        </button>
+                        <button class="btn btn-link">
+                            <i class="fa fa-comments" aria-hidden="true"> 8</i>
+                        </button>
+                    </li>
+                </ul>
+            </footer>
+        </article>
 
     </div>
 
@@ -50,4 +64,3 @@
 <p>Este Blog no tiene ningún artículo.</p>
 
 {% endif %}
-
