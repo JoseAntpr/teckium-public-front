@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block content %}
+<div class="borderBottomLighter mb-5">
+    <h1>New Blog</h1>
+</div>
+
+<form class="mt-5 mb-5 new-post-form" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.title }}
+    </div>
+    <div class="form-group">
+        {{form.image}}
+    </div>
+    <div class="form-group">
+        {{form.summary}}
+    </div>
+    <div class="form-group">
+        {{form.content}}
+    </div>
+    <div class="form-group">
+        {{form.blogs}}
+    </div>
+    <div class="form-group">
+        {{form.tags}}
+    </div>
+    <button class="btn btn-primary" type="submit" name="publish">Publicar</button>
+    <button class="btn btn-primary" type="submit" name="draft">Guardar</button>
+</form>
+{% endblock %}

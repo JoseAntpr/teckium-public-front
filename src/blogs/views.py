@@ -5,9 +5,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 
-from blogs.requests_api import get_posts, get_tags, get_post, get_comments, create_comment
+from blogs.requests_api import get_posts, get_tags, get_post, get_comments, create_comment, get_blogs, create_post
 from users.requests_api import tk_refresh
-from blogs.forms import CommentForm
+from blogs.forms import CommentForm, PostForm
 
 
 class IndexView(View):
@@ -23,7 +23,7 @@ class IndexView(View):
                 new_token = data['token']
 
         # posts = requests.get(INFO_API.get("url") + INFO_API.get("version") + "posts/?status=2")
-        params = {}
+        params = {'status': 2}
         posts = get_posts(params)
         tags = get_tags()
 
@@ -57,7 +57,6 @@ class DetailView(View):
         tags = get_tags()
         comments = get_comments(params)
        
-
         context = {
             'post': post,
             'tags': tags['results'],
@@ -73,7 +72,7 @@ class DetailView(View):
 
     def post(self, request, blog_pk, post_pk):
         form = CommentForm(request.POST)
-        token = request.session.get('jwt',None)
+        token = request.session.get('jwt', None)
         user = []
         new_token = None
         if token:
@@ -134,3 +133,69 @@ class PostByCategoryView(View):
             request.session["jwt"] = new_token
 
         return render(request, "blogs/post_by_category.html", context)
+
+
+class NewBlogView(View):
+    def get(self, request):
+        token = request.session.get("jwt", None)
+        user = []
+        new_token = None
+        if token:
+            token = {'token': token}
+            data = tk_refresh(token)
+            if data:
+                user = data['user']
+                new_token = data['token']
+
+        tags = get_tags()
+        params = {'owner': user.get('id')}
+        blogs = get_blogs(params)
+
+        context = {
+            'tags': tags['results'],
+            'user': user,
+            'form': PostForm(tags=tags['results'], blogs=blogs['results'])
+        }
+
+        return render(request, "blogs/new-blog.html", context)
+        
+    def post(self, request):
+        token = request.session.get("jwt", None)
+        user = []
+        new_token = None
+        if token:
+            token = {'token': token}
+            data = tk_refresh(token)
+            if data:
+                user = data['user']
+                new_token = data['token']
+        
+        params = {'owner': user.get('id')}
+        blogs = get_blogs(params)
+        tags = get_tags()
+        
+        form = PostForm(request.POST, tags=tags['results'], blogs=blogs['results'])
+
+        if form.is_valid():
+            file = { 
+                'image': form.cleaned_data.pop('image')
+            }
+            data = {
+                'owner': user.get('id'),
+                'tags': form.cleaned_data.get('tags'),
+                'title': form.cleaned_data.get('title'),
+                'summary': form.cleaned_data.get('summary'),
+                'content': form.cleaned_data.get('content'),
+                'status': 2 if 'publish' in request.POST else 1,
+                'blog': form.cleaned_data.get('blogs')
+
+            }
+            create_post(file, data)
+            return redirect('index')
+
+        context = {
+            'tags': tags['results'],
+            'user': user,
+            'form': PostForm(tags=tags['results'], blogs=blogs['results'])
+        }
+        return render(request, "blogs/new-blog.html", context)

@@ -1,0 +1,28 @@
+.new-post-form {
+  .content {
+      padding:0px
+  }
+
+  input[type="text"] {
+    background: transparent;
+    border: none;
+    font-size: 2.5em;
+    padding: 0;
+  }
+  textarea {
+    background: transparent;
+    border: none;
+    resize: none;
+    font-size: 1.3em;
+    &:focus {
+      background: transparent;
+    }
+  }
+  select {
+    background: transparent;
+    border: none;
+    &:focus {
+      background: transparent;
+    }
+  }
+}
