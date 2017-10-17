@@ -1,6 +1,6 @@
 {% extends 'base.html' %} 
 {% block content %}
-<h1>Profile</h1>
+<h2>Profile</h2>
 
 <div class="row ">
     <div class="col-12">
@@ -73,5 +73,10 @@
       </div>
 </form>
 
+<br>
+
+<h2>Posts</h2>
+
+{% include './blogs/list.html'%}
 
 {% endblock %}

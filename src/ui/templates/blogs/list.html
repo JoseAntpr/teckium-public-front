@@ -1,3 +1,5 @@
+{% if posts %}
+
 <section class="row">
     <div class="row">
 
@@ -61,10 +63,14 @@
 
 
             </div>
-
             {% endfor %}
         </div>
     </div>
 
 
 </section>
+
+{% else %}
+<p>No has escrito ningún artículo todavía.</p>
+
+{% endif %}
