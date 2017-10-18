@@ -6,4 +6,5 @@ require('bootstrap');
 window.moment = popper;
 time = require('./date');
 time.calcTime();
-require('./social_icon_card')
+require('./social_icon_card');
+require('./reload_card');
