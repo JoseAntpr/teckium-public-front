@@ -16,16 +16,17 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from blogs.views import IndexView, DetailView, PostByCategoryView, NewBlogView
+from blogs.views import IndexView, DetailView, PostByCategoryView, NewBlogView ,DeleteComment
 from users.views import LoginView, SigninView, LogoutView, ProfileView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name="index"),
-    url(r'^(?P<blog_pk>[0-9]+)/(?P<post_pk>[0-9]+)', DetailView.as_view(),
+    url(r'^(?P<blog_pk>[0-9]+)/(?P<post_pk>[0-9]+)/$', DetailView.as_view(),
         name="post-detail"),
     url(r'^tag/(?P<tag_pk>[0-9]+)$', PostByCategoryView.as_view(), name="posts-tag"),
     url(r'^new-post', NewBlogView.as_view(), name="new-post"),
+    url(r'^(?P<blog_pk>[0-9]+)/(?P<post_pk>[0-9]+)/delete-comment/(?P<comment_pk>[0-9]+)', DeleteComment.as_view(), name="delete-comment"),
 
     url(r'^login', LoginView.as_view(), name="login"),
     url(r'^signin', SigninView.as_view(), name="signin"),

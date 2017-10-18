@@ -21,6 +21,9 @@
                     <a>{{ comment.owner.username }}</a>
                     <time class="publication-date">{{ comment.publication_date}}</time>
                 </div>
+                {% if user.id == comment.owner.id %}
+                 <a href="{% url 'delete-comment' blog_pk=post.blog.id post_pk=post.id comment_pk=comment.id %}" class="btn btn-danger button-delete" name="button-delete" > Borrar</a>
+                {% endif %}
             </div>
             <div class="content">
                 {{ comment.content }}

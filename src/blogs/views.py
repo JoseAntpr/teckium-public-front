@@ -2,10 +2,12 @@ import requests
 import datetime
 
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import View
+from django.urls import reverse
 
-from blogs.requests_api import get_posts, get_tags, get_post, get_comments, create_comment, get_blogs, create_post
+from blogs.requests_api import get_posts, get_tags, get_post, get_comments, create_comment, get_blogs, create_post, delete_comment
 from users.requests_api import tk_refresh
 from blogs.forms import CommentForm, PostForm
 
@@ -71,6 +73,7 @@ class DetailView(View):
         return render(request, "blogs/detail.html", context)
 
     def post(self, request, blog_pk, post_pk):
+        print("hola")
         form = CommentForm(request.POST)
         token = request.session.get('jwt', None)
         user = []
@@ -103,7 +106,14 @@ class DetailView(View):
             
         return render(request, "blogs/detail.html", context)
 
+class DeleteComment(View):
+    def get(self, request, blog_pk, post_pk, comment_pk):
+        print("***********")
+        print("entra")
+        delete_comment(comment_pk)
+        return HttpResponseRedirect(reverse('post-detail', args=[blog_pk, post_pk]))
 
+        
 class PostByCategoryView(View):
     def get(self, request, tag_pk):
         token = request.session.get("jwt", None)
@@ -199,3 +209,4 @@ class NewBlogView(View):
             'form': PostForm(tags=tags['results'], blogs=blogs['results'])
         }
         return render(request, "blogs/new-blog.html", context)
+

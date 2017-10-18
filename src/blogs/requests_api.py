@@ -58,6 +58,17 @@ def create_comment(data):
     except requests.exceptions.ConnectionError:
         return None
 
+def delete_comment(comment_pk):
+    try:
+        r = requests.delete(INFO_API.get("url") + INFO_API.get("version") + 
+                         "comments/" + comment_pk + "/")
+        if not r.status_code == 201:
+            return None
+    
+        return r.json()
+    except requests.exceptions.ConnectionError:
+        return None
+
 
 def get_tags(*argv):
 
