@@ -56,7 +56,15 @@
     </div>
 
     {% endfor %}
-
+    <div class="ui-error">
+        Se ha producido un error.
+    </div>
+    <div class="ui-blank">
+        <p>Aún no hay ningún posts.</p>
+    </div>
+    <div class="ui-loading">
+        Cargando...
+    </div>
 </section>
 
 
@@ -64,3 +72,7 @@
 <p>Este Blog no tiene ningún artículo.</p>
 
 {% endif %}
+
+<script>
+    var url = "{{next}}"
+</script>

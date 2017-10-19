@@ -1,22 +1,9 @@
-var previous;
+const date = require('./date');
 
 $(window).scroll(function () {
     if ($('.post').length) {
-        var posicion = $(window).scrollTop();
-        var posts = Math.floor($('.post:last').offset().top) - $(window).height();
-        var next
-
-        if (posicion >= posts) {
-            if (!previous) {
-                
-                console.log("Es hora de recargar mas")
-                postsListManager.loadposts(function (nextPage){
-                    next = nextPage
-                    console.log(next)
-                });            
-            } else if (previous == 1) {
-                return false;
-            }
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            postsListManager.loadposts();            
         }
     }
 });
@@ -38,7 +25,7 @@ var postsListManager = {
         $('.section-post').removeClass().addClass('section-post loading');
     },
 
-    loadposts: function (nextPage) {
+    loadposts: function () {
         var self = this;
         // mostrar el mensaje de cargando
         self.setUiLoading();
@@ -49,7 +36,6 @@ var postsListManager = {
                 self.setUiBlank(); // si no hay posts -> estado en blanco
             } else {
                 // pintar los posts en el listado
-                nextPage(posts.next)
                 self.renderposts(posts.results);
                 self.setUiIdeal(); // ponemos el estado ideal
             }
@@ -67,26 +53,25 @@ var postsListManager = {
             html += '                <header>'
             html += '                    <div class="title">'
             html += '                        <h2>'
-            html += '                            <a href="{% url "post-detail" blog_pk=post.blog.id post_pk=post.id %}">'+ post.title + '</a>'
+            html += '                            <a href="/'+post.blog.id+'/'+post.id +'">'+ post.title + '</a>'
             html += '                        </h2>'
             html += '                        <p>'+post.summary+'</p>'
             html += '                    </div>'
             html += '                    <div class="meta">'
-            html += '                        <time class="publication-date">'+post.publication_date +'</time>'
+            html += '                        <time class="publication-date">'+date.dateFormat(post.publication_date) +'</time>'
             html += '                        <a href="#" class="author">'
             html += '                            <span class="name">'+post.blog.title+'</span>'
-            html += '                            <img src='+ post.blog.logo? post.blog.logo : "https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" +'class="border-tlr-radius">'
+            html +=                              post.blog.logo ? '<img src="'+post.blog.logo+'" class="border-tlr-radius">' : '<img src="https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" class="border-tlr-radius">'
             html += '                        </a>'
             html += '                    </div>'
             html += '                </header>'
             html += '                <a href="#" class="image featured">'
-            html += '                    <img src='+ post.image ? post.image : "http://lorempixel.com/400/200/sports/" +' alt=""'
-            html += '                    />'
+            html +=                  post.image ? '<img src="'+ post.image +'" alt=""/>'  : '<img src="http://lorempixel.com/400/200/sports/" alt=""/>'
             html += '                </a>'
-            html += '                <p>{% if post.content %} {{post.content}} {% else %} Mauris neque quam, fermentum ut nisl vitae, convallis maximus'
+            html +=                  post.content ? '<p>'+ post.content +'</p>' : '<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus'
             html += '                    nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus'
             html += '                    at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae'
-            html += '                    justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. {% endif %} </p>'
+            html += '                    justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. </p>'
             html += '                <footer>'
             html += '                    <ul class="actions">'
             html += '                        <li>'
@@ -94,9 +79,9 @@ var postsListManager = {
             html += '                        </li>'
             html += '                    </ul>'
             html += '                    <ul class="stats">'
-            html += '                        <li>'
-            html += '                            <a href="#"> {{ tag.name }} </a>'
-            html += '                        </li>'
+                                         post.tags.map(function(tag){
+                                            html +='<li><a href="#">'+ tag.name +'</a></li>'
+                                        })
             html += '                        <li>'
             html += '                            <button class="btn btn-link">'
             html += '                                <i class="fa fa-bookmark" aria-hidden="true"> 7</i>'
@@ -109,17 +94,8 @@ var postsListManager = {
             html += '                </footer>'
             html += '            </article>'
             html += '        </div>'
-            html += '    <div class="ui-error">'
-            html += '        Se ha producido un error.'
-            html += '    </div>'
-            html += '    <div class="ui-blank">'
-            html += '        <p>Aún no hay ningún posts.</p>'
-            html += '    </div>'
-            html += '    <div class="ui-loading">'
-            html += '        Cargando...'
-            html += '    </div>'
         }
-        $(".comment:last").append(html);
+        $(".section-post").append(html);
     }
 }
 
@@ -127,17 +103,24 @@ var postsListManager = {
 var postservice = {
     // recuperar todos los posts
     list: function (successCallback, errorCallback) {
-        $.ajax({
-            url: "http://127.0.0.1:8001/api/1.0/posts/",
-            type: "get", // recuperar datos en una API REST
-            success: function (data) {
-                successCallback(data);
-            },
-            error: function (error) {
-                errorCallback(error);
-                console.error("postsServiceError", error);
-            }
-        });
+        if (url){
+            $.ajax({
+                url: url,
+                type: "get", // recuperar datos en una API REST
+                success: function (data) {
+                    console.log(url)
+                        url = data.next;
+                        successCallback(data);
+                    
+                },
+                error: function (error) {
+                    errorCallback(error);
+                    console.error("postsServiceError", error);
+                }
+            });
+        }
+        
+        postsListManager.setUiIdeal()
     }
 }
 

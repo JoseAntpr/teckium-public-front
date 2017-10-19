@@ -32,6 +32,7 @@ class IndexView(View):
         context = {
             'posts': posts['results'],
             'tags': tags['results'],
+            'next': posts['next'],
             'user': user
         }
 
