@@ -119,7 +119,7 @@ var postsListManager = {
             html += '        Cargando...'
             html += '    </div>'
         }
-        $(".section-post:last").append(html);
+        $(".comment:last").append(html);
     }
 }
 

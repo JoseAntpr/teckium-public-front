@@ -11,26 +11,35 @@
         </div>
         <button type="submit" class="btn btn-primary">Publicar</button>
     </form>
-    {% endif %} {%for comment in comments %}
-    <div id="comments" class="card mb-3 card-comment">
-        <div class="card-body">
-            <div class="meta">
-                <img src={% if comment.owner.profile.avatar %} {{ comment.owner.profile.avatar }} {% else %}
-                    "https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" {% endif %} class="img-avatar">
-                <div class="author">
-                    <a>{{ comment.owner.username }}</a>
-                    <time class="publication-date">{{ comment.publication_date}}</time>
+    <section class="section-comments">
+        {% endif %} {%for comment in comments %}
+        <div id="comments" class="card mb-3 card-comment">
+            <div class="card-body">
+                <div class="meta">
+                    <img src={% if comment.owner.profile.avatar %} {{ comment.owner.profile.avatar }} {% else %}
+                        "https://www.hackster.io/assets/about/icon-blog-views-e31708c9be9be716040f0c09355b6a884fdbbdc2b171ccee3555cd89a2ad83da.png" {% endif %} class="img-avatar">
+                    <div class="author">
+                        <a>{{ comment.owner.username }}</a>
+                        <time class="publication-date">{{ comment.publication_date}}</time>
+                    </div>
+                    {% if user.id == comment.owner.id %}
+                    <a id="button_delete" href="{% url 'delete-comment' blog_pk=post.blog.id post_pk=post.id comment_pk=comment.id %}" class="btn btn-danger button-delete"
+                        name="button-delete"> Borrar</a>
+                    {% endif %}
                 </div>
-                {% if user.id == comment.owner.id %}
-                 <a href="{% url 'delete-comment' blog_pk=post.blog.id post_pk=post.id comment_pk=comment.id %}" class="btn btn-danger button-delete" name="button-delete" > Borrar</a>
-                {% endif %}
-            </div>
-            <div class="content">
-                {{ comment.content }}
-            </div>
+                <div class="content">
+                    {{ comment.content }}
+                </div>
 
+            </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
+    </section>
 
-    
+    <button id="loadComments" class="btn btn-primary load-comments" value="{{post.id}}"> Cargar más comentarios</button>
+
+    <script type="text/javascript"> 
+        let user = "{{ user.id }}";
+        let blog = "{{ post.blog.id }}";
+        let post = "{{ post.id }}"
+     </script>
