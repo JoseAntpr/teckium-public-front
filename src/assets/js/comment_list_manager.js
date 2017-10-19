@@ -7,7 +7,7 @@ module.exports = {
     loadComments: function(post_id){
         let self = this;             
 
-        CommentService.list(post_id, function(comments){
+        CommentService.list(function(comments){
             if (comments.length != 0){
                 console.log(comments.results);
                 self.renderComments(comments.results);

@@ -102,6 +102,7 @@ class DetailView(View):
             'tags': tags['results'],
             'user': user,
             'comments': comments['results'],
+            'next': comments['next'],
             'form':  CommentForm()
         }
             
