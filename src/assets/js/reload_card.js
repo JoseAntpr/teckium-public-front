@@ -1,10 +1,8 @@
 const date = require('./date');
 
 $(window).scroll(function () {
-    if ($('.post').length) {
-        if($(window).scrollTop() + $(window).height() == $(document).height()) {
-            postsListManager.loadposts();            
-        }
+    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+        postsListManager.loadposts();
     }
 });
 
@@ -76,6 +74,10 @@ var postsListManager = {
             html += '                    <ul class="actions">'
             html += '                        <li>'
             html += '                            <a href="#" class="button big">Continue Reading</a>'
+                                                 if(user == post.owner.id){
+                                                    html += '<a href="/edit-post/' + post.id +'" class="btn btn-primary btn-xs"><span class="fa fa-pencil"></span></a>'
+                                                    html += '<a href="/delete-post/' + post.id +'" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>'
+                                                 }
             html += '                        </li>'
             html += '                    </ul>'
             html += '                    <ul class="stats">'
