@@ -122,7 +122,6 @@ def put_post(post_id, file, json):
     :return: None si hay algun problema y el status code si esta ok
     """
     print(post_id)
-    print(json)
 
     try:
         if file.get('image'):
