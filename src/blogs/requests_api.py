@@ -113,3 +113,37 @@ def create_post(file, data):
             return None
     except requests.exceptions.ConnectionError:
         return None
+
+
+def put_post(post_id, file, json):
+    """
+    Actualiza los valores de un post
+    :param json: Archivo json con la configuración del recomendador
+    :return: None si hay algun problema y el status code si esta ok
+    """
+    print(post_id)
+    print(json)
+
+    try:
+        if file.get('image'):
+            r = requests.put(INFO_API.get("url") + INFO_API.get("version") + "posts/" + str(post_id) + "/", files=file, data=json)
+        else:
+            r = requests.put(INFO_API.get("url") + INFO_API.get("version") + "posts/" + str(post_id) + "/", data=json)
+        if r.status_code == 200:
+            return r.status_code
+        else:
+            return None
+    except requests.exceptions.ConnectionError:
+        return None
+
+
+def delete_post(post_pk):
+    try:
+        r = requests.delete(INFO_API.get("url") + INFO_API.get("version") +
+                            "posts/" + post_pk + "/")
+        if not r.status_code == 201:
+            return None
+
+        return r.json()
+    except requests.exceptions.ConnectionError:
+        return None

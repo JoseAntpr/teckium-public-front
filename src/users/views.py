@@ -163,7 +163,8 @@ class ProfileView(View):
             'profileForm': ProfileForm(user.get('profile')),
             'posts': posts['results'],
             'tags': tags['results'],
-            'user': user
+            'user': user,
+            'next': posts['next'],
         }
 
         return render(request, 'profile.html', context)
@@ -206,7 +207,8 @@ class ProfileView(View):
             'profileForm': profileForm,
             'posts': posts['results'],
             'tags': tags['results'],
-            'user': user
+            'user': user,
+            'next': posts['next'],
         }
 
         return render(request, 'profile.html', context)

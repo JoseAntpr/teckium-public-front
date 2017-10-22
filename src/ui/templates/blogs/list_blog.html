@@ -23,17 +23,21 @@
                 </div>
             </header>
             <a href="#" class="image featured">
-                <img src={% if post.image %} {{post.image}} {% else %} "http://lorempixel.com/400/200/sports/" {% endif %} alt=""
-                />
+                <img src={% if post.image %} {{post.image}} {% else %} "http://lorempixel.com/400/200/sports/" {% endif %} alt=""/>
             </a>
             <p>{% if post.content %} {{post.content}} {% else %} Mauris neque quam, fermentum ut nisl vitae, convallis maximus
                 nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus
                 at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae
                 justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. {% endif %} </p>
             <footer>
+
                 <ul class="actions">
                     <li>
                         <a href="#" class="button big">Continue Reading</a>
+                        {% if user.id == post.owner.id %}
+                            <a href="{% url 'edit-post' post_pk=post.id %}" class="btn btn-primary btn-xs"><span class="fa fa-pencil"></span></a>
+                            <a href="{% url 'delete-post' post_pk=post.id %}" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>
+                        {% endif %}
                     </li>
                 </ul>
                 <ul class="stats">
