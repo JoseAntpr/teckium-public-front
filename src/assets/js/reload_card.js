@@ -29,7 +29,7 @@ var postsListManager = {
         self.setUiLoading();
 
         // cargamos los posts
-        postservice.list(function (posts) { 
+        postservice.list(function (posts) {
             if (posts.results.length == 0) {
                 self.setUiBlank(); // si no hay posts -> estado en blanco
             } else {
