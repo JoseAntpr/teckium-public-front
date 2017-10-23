@@ -78,7 +78,6 @@ class DetailView(View):
         return render(request, "blogs/detail.html", context)
 
     def post(self, request, blog_pk, post_pk):
-        print("hola")
         form = CommentForm(request.POST)
         token = request.session.get('jwt', None)
         user = []
