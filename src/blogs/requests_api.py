@@ -9,7 +9,7 @@ def get_posts(filters, *argv):
     :return: json con los posts
     '''
     try:
-        r = requests.get(settings.settings.INFO_API.get("url") + settings.INFO_API.get("version") + 
+        r = requests.get(settings.INFO_API.get("url") + settings.INFO_API.get("version") +
                          "posts/", params=filters)
 
         if not r.status_code == 200:
