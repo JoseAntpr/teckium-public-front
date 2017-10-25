@@ -1,8 +1,6 @@
 import requests
-from django.contrib import messages
+from django.conf import settings
 from django.core.serializers import json
-
-from teckiumDjangoFront.settings import INFO_API, INFO_Client
 
 
 def tk_authenticate(data):
@@ -12,7 +10,7 @@ def tk_authenticate(data):
     :return: json con token
     '''
     try:
-        r = requests.post(INFO_API.get("url") + INFO_API.get("version") + "token-auth/", data=data)
+        r = requests.post(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "token-auth/", data=data)
         if not r.status_code == 200:
             return None
 
@@ -24,7 +22,7 @@ def tk_authenticate(data):
 def tk_refresh(token):
     try:
         # Refresca el token
-        r = requests.post(INFO_API.get("url") + INFO_API.get("version") + "token-refresh/", data=token)
+        r = requests.post(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "token-refresh/", data=token)
         data = r.json()
         print("token-refresh: ", r.status_code)
         print("token-refresh: ", data)
@@ -45,7 +43,7 @@ def create_user(data):
     :return: json con token
     '''
     try:
-        r = requests.post(INFO_API.get("url") + INFO_API.get("version") + "users/", data=data)
+        r = requests.post(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "users/", data=data)
         if not r.status_code == 201:
             return None
 
@@ -60,7 +58,7 @@ def get_profile(user_id):
     :return: Json recibido
     """
     try:
-        r = requests.get(INFO_API.get("url") + INFO_API.get("version") + 'users/' + user_id)
+        r = requests.get(settings.INFO_API.get("url") + settings.INFO_API.get("version") + 'users/' + user_id)
         if r.status_code == 200:
             configuration = r.json()
             return json.dumps(configuration, indent=4)
@@ -81,9 +79,9 @@ def put_profile(user_id, file, json):
 
     try:
         if file.get('profile.avatar'):
-            r = requests.put(INFO_API.get("url") + INFO_API.get("version") + "users/" + str(user_id) + "/", files=file, data=json)
+            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "users/" + str(user_id) + "/", files=file, data=json)
         else:
-            r = requests.put(INFO_API.get("url") + INFO_API.get("version") + "users/" + str(user_id) + "/", data=json)
+            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "users/" + str(user_id) + "/", data=json)
         if r.status_code == 200:
             return r.status_code
         else:

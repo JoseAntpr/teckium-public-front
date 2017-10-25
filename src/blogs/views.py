@@ -32,6 +32,8 @@ class IndexView(View):
         posts = get_posts(params)
         tags = get_tags()
 
+        print(posts)
+
         context = {
             'posts': posts['results'],
             'tags': tags['results'],
