@@ -2,12 +2,12 @@
 .navbar-teckium {
   background-color: #fff;
   box-shadow: 0px 2px 18px rgba(0,0,0,0.3);
+  height: 80px;
 
   .navbar-brand {
     color: #4caf50;
-
+    font-size: 2rem;
     font-family: "Yellowtail";
-    font-size: 34px;
     letter-spacing: 0px;
     font-weight: 400;
     margin: 0 30px;
@@ -16,6 +16,8 @@
     @include hover-focus {
       color: #4caf50;
     }
+
+
   }
 
   .navbar-nav {
@@ -59,3 +61,34 @@
     height: 32px;
 }
 
+
+
+
+@media (max-width: 991px) {
+  .navbar {
+    min-height: 180px;
+  }
+
+  .navbar-teckium .navbar-brand {
+    padding: 0 15px;
+    font-size: 4.5rem;
+    line-height: 180px;
+  }
+
+  .navbar-toggler {
+      font-size: 3.25rem;
+  }
+  
+  .navbar-toggle {
+    /* (80px - button height 34px) / 2 = 23px */
+    margin-top: 23px;
+    padding: 9px 10px !important;
+  }
+
+  .navbar-nav > li > a {
+    /* (80px - line-height of 27px) / 2 = 26.5px */
+    font-size: 2.5rem;
+    padding-top: 20px;
+    line-height: 80px;
+  }
+}
