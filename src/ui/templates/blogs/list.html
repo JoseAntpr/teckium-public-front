@@ -58,8 +58,12 @@
                                 </div>
                             </div>
                             <div class="blog-stats">
-                                <button class="btn btn-link">
-                                    <i class="fa fa-bookmark" aria-hidden="true">7</i>
+                                <button id="{{ post.id }}"class="btn btn-link">
+                                    {% if user.id in post.likes%}
+                                        <i class="fa fa-heart" aria-hidden="true"> {{ post.likes|length }}</i>
+                                    {% else %}
+                                        <i class="fa fa-heart-o" aria-hidden="true"> {{ post.likes|length }}</i>
+                                    {% endif %}
                                 </button>
                                 <a href="" class="btn btn-link">
                                     <i class="fa fa-comments" aria-hidden="true">{{ post.comments|length }}</i>

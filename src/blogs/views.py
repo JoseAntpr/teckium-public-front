@@ -206,6 +206,7 @@ class NewBlogView(View):
                 'blog': form.cleaned_data.get('blogs')
 
             }
+            print(data)
             create_post(file, data)
             return redirect('index')
 

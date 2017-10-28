@@ -7,7 +7,6 @@ module.exports = {
                 url: url,
                 type: "get",
                 success: function(data){
-                    console.log(url)
                     url = data.next;
                     successCallBack(data);
                 },
