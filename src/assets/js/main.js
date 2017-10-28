@@ -8,4 +8,4 @@ time = require('./date');
 time.calcTime();
 require('./social_icon_card');
 require('./ready');
-require('./reload_card');
+//require('./reload_card');

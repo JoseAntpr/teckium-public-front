@@ -48,7 +48,7 @@ module.exports = {
 
 }
 
-},{"./comment_service":2,"./date":3,"jquery":11}],2:[function(require,module,exports){
+},{"./comment_service":2,"./date":3,"jquery":12}],2:[function(require,module,exports){
 const $ = require('jquery');
 
 module.exports = {
@@ -69,7 +69,7 @@ module.exports = {
         }    
     },
 }
-},{"jquery":11}],3:[function(require,module,exports){
+},{"jquery":12}],3:[function(require,module,exports){
 const moment = require("moment");
 moment.locale("es");
 const $ = require("jquery");
@@ -99,7 +99,7 @@ module.exports = {
   }
 };
 
-},{"jquery":11,"moment":12}],4:[function(require,module,exports){
+},{"jquery":12,"moment":13}],4:[function(require,module,exports){
 const $ = require('jquery');
 const likeService = require('./likes_service');
 
@@ -148,7 +148,7 @@ function removeElementFromArray (array, element){
     }
     return array;
 }
-},{"./likes_service":5,"jquery":11}],5:[function(require,module,exports){
+},{"./likes_service":5,"jquery":12}],5:[function(require,module,exports){
 const $ = require("jquery");
 const API_URL = "http://127.0.0.1:8001/api/1.0/posts/";
 
@@ -171,7 +171,7 @@ module.exports = {
   }
 };
 
-},{"jquery":11}],6:[function(require,module,exports){
+},{"jquery":12}],6:[function(require,module,exports){
 $ = require('jquery');
 window.jQuery = $;
 popper = require('popper.js')
@@ -182,35 +182,15 @@ time = require('./date');
 time.calcTime();
 require('./social_icon_card');
 require('./ready');
-require('./reload_card');
+//require('./reload_card');
 
-},{"./date":3,"./ready":7,"./reload_card":8,"./social_icon_card":9,"bootstrap":10,"jquery":11,"popper.js":13}],7:[function(require,module,exports){
+},{"./date":3,"./ready":9,"./social_icon_card":10,"bootstrap":11,"jquery":12,"popper.js":14}],7:[function(require,module,exports){
 const $ = require('jquery');
-const CommentListManager = require('./comment_list_manager');
-const likes = require('./likes');
-
-$(document).ready(function(){
-
-    $('.load-comments').on("click", function(){
-        let post_id = document.getElementById("loadComments");
-        CommentListManager.loadComments(post_id.value);
-    });
-
-    $('.favourite-button').on("click", function(){
-        likes.clickLike($(this));
-    });
-
-});
-},{"./comment_list_manager":1,"./likes":4,"jquery":11}],8:[function(require,module,exports){
+const postService = require('./post_service');
 const date = require('./date');
 
-$(window).scroll(function () {
-    if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        postsListManager.loadposts();
-    }
-});
+module.exports = {
 
-var postsListManager = {
     setUiIdeal: function () {
         $('.section-post').removeClass().addClass('section-post ideal');
     },
@@ -233,7 +213,7 @@ var postsListManager = {
         self.setUiLoading();
 
         // cargamos los posts
-        postservice.list(function (posts) {
+        postService.list(function (posts) {
             if (posts.results.length == 0) {
                 self.setUiBlank(); // si no hay posts -> estado en blanco
             } else {
@@ -290,7 +270,7 @@ var postsListManager = {
                                         })
             html += '                        <li>'
             html += '                            <button class="btn btn-link">'
-            html += '                                <i class="fa fa-bookmark" aria-hidden="true"> 7</i>'
+            html += '                                <i class="fa fa-heart" aria-hidden="true"> 7</i>'
             html += '                            </button>'
             html += '                            <button class="btn btn-link">'
             html += '                                <i class="fa fa-comments" aria-hidden="true"> 8</i>'
@@ -303,10 +283,14 @@ var postsListManager = {
         }
         $(".section-post").append(html);
     }
+
 }
 
+},{"./date":3,"./post_service":8,"jquery":12}],8:[function(require,module,exports){
+const $ = require('jquery');
 
-var postservice = {
+module.exports = {
+
     // recuperar todos los posts
     list: function (successCallback, errorCallback) {
         if (url && url != "None"){
@@ -326,16 +310,34 @@ var postservice = {
             });
         }
         
-        postsListManager.setUiIdeal()
     }
+
 }
+},{"jquery":12}],9:[function(require,module,exports){
+const $ = require('jquery');
+const CommentListManager = require('./comment_list_manager');
+const postListManager = require('./post_list_manager');
+const likes = require('./likes');
 
+$(document).ready(function(){
 
+    $('.load-comments').on("click", function(){
+        let post_id = document.getElementById("loadComments");
+        CommentListManager.loadComments(post_id.value);
+    });
 
+    $('.favourite-button').on("click", function(){
+        likes.clickLike($(this));
+    });
 
+    $(window).scroll(function () {
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            postListManager.loadposts();
+        }
+    });
 
-
-},{"./date":3}],9:[function(require,module,exports){
+});
+},{"./comment_list_manager":1,"./likes":4,"./post_list_manager":7,"jquery":12}],10:[function(require,module,exports){
 $(document).ready(function($) {
 
 	$('.card__share > a').on('click', function(e){
@@ -345,7 +347,7 @@ $(document).ready(function($) {
     });
 
 });
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /*!
  * Bootstrap v4.0.0-beta (https://getbootstrap.com)
  * Copyright 2011-2017 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
@@ -4177,7 +4179,7 @@ var Popover = function ($) {
 
 
 })();
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.2.1
  * https://jquery.com/
@@ -14432,7 +14434,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 //! moment.js
 //! version : 2.19.0
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -18961,7 +18963,7 @@ return hooks;
 
 })));
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function (global){
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
