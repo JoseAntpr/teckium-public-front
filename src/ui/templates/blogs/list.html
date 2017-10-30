@@ -1,4 +1,5 @@
 {% if posts %}
+{% load i18n %}
 
 <section class="row">
     <div class="row">
@@ -12,7 +13,9 @@
 
                 <div class="card radius shadowDepth1 h-100">
                     <div class="card__image border-tlr-radius">
-                        <img src={% if post.image %} {{post.image}} {% else %} "http://lorempixel.com/400/200/sports/" {% endif %} alt="image" class="border-tlr-radius">
+                        <a href="{% url 'post-detail' blog_pk=post.blog.id post_pk=post.id %}">
+                            <img src={% if post.image %} {{post.image}} {% else %} "http://lorempixel.com/400/200/sports/" {% endif %} alt="image" class="border-tlr-radius">
+                        </a>
                     </div>
 
                     <div class="card__content card__padding">
@@ -87,6 +90,6 @@
 </section>
 
 {% else %}
-<p>No has escrito ningún artículo todavía.</p>
+<p>{% trans "This blog has no articles" %}</p>
 
 {% endif %}

@@ -1,0 +1,135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 13:16+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ui/templates/blogs/commets.html:4
+msgid "Comments"
+msgstr "Comentarios"
+
+#: ui/templates/blogs/commets.html:13 ui/templates/blogs/new-blog.html:28
+msgid "Publish"
+msgstr "Publicar"
+
+#: ui/templates/blogs/commets.html:28
+msgid "Delete"
+msgstr "Borrar"
+
+#: ui/templates/blogs/commets.html:40
+msgid "Load more comments"
+msgstr "Cargar más comentarios"
+
+#: ui/templates/blogs/edit-blog.html:5
+msgid "Edit Post"
+msgstr ""
+
+#: ui/templates/blogs/edit-blog.html:31 ui/templates/blogs/new-blog.html:29
+msgid "Save"
+msgstr ""
+
+#: ui/templates/blogs/index.html:5
+msgid "Most liked posts"
+msgstr ""
+
+#: ui/templates/blogs/index.html:12
+msgid "Latest posts"
+msgstr ""
+
+#: ui/templates/blogs/list.html:93 ui/templates/blogs/list_blog.html:85
+msgid "This blog has no articles"
+msgstr ""
+
+#: ui/templates/blogs/list_blog.html:34
+msgid "Continue Reading"
+msgstr ""
+
+#: ui/templates/blogs/list_blog.html:73
+msgid "An error has occurred"
+msgstr ""
+
+#: ui/templates/blogs/list_blog.html:76
+msgid "No posts yet"
+msgstr ""
+
+#: ui/templates/blogs/list_blog.html:79
+msgid "loading..."
+msgstr ""
+
+#: ui/templates/blogs/new-blog.html:5
+msgid "New Blog"
+msgstr ""
+
+#: ui/templates/login.html:39
+msgid "Not registered?"
+msgstr ""
+
+#: ui/templates/login.html:39
+msgid "Create an account"
+msgstr ""
+
+#: ui/templates/navbar.html:25
+msgid "Profile"
+msgstr ""
+
+#: ui/templates/navbar.html:26
+msgid "New post"
+msgstr ""
+
+#: ui/templates/navbar.html:27
+msgid "Cerrar"
+msgstr ""
+
+#: ui/templates/navbar.html:32
+msgid "Login"
+msgstr ""
+
+#: ui/templates/navbar.html:35
+msgid "Signin"
+msgstr ""
+
+#: ui/templates/profile.html:10
+msgid "No biography "
+msgstr ""
+
+#: ui/templates/profile.html:13
+msgid "posts"
+msgstr ""
+
+#: ui/templates/profile.html:14
+msgid "blogs"
+msgstr ""
+
+#: ui/templates/profile.html:15
+msgid "followers"
+msgstr ""
+
+#: ui/templates/profile.html:16
+msgid "following"
+msgstr ""
+
+#: ui/templates/profile.html:78
+msgid "Your posts"
+msgstr ""
+
+#: ui/templates/signin.html:39
+msgid "Are you registered?"
+msgstr ""
+
+#: ui/templates/signin.html:39
+msgid "Log in"
+msgstr ""

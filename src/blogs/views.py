@@ -113,9 +113,8 @@ class DetailView(View):
 
 
 class DeleteComment(View):
+    @method_decorator(jwt_required)
     def get(self, request, blog_pk, post_pk, comment_pk):
-        print("***********")
-        print("entra")
         delete_comment(comment_pk)
         return HttpResponseRedirect(reverse('post-detail', args=[blog_pk, post_pk]))
 
@@ -152,9 +151,10 @@ class PostByCategoryView(View):
 
 
 class NewBlogView(View):
-    def get(self, request):
-        token = request.session.get("jwt", None)
-        user = []
+    @method_decorator(jwt_required)
+    def get(self, request, **kwargs):
+        user = kwargs['user']
+        token = kwargs['token']
         new_token = None
         if token:
             token = {'token': token}
@@ -162,7 +162,7 @@ class NewBlogView(View):
             if data:
                 user = data['user']
                 new_token = data['token']
-
+                request.session["jwt"] = new_token
         tags = get_tags()
         params = {'owner': user.get('id')}
         blogs = get_blogs(params)
@@ -174,10 +174,11 @@ class NewBlogView(View):
         }
 
         return render(request, "blogs/new-blog.html", context)
-        
-    def post(self, request):
-        token = request.session.get("jwt", None)
-        user = []
+    
+    @method_decorator(jwt_required)
+    def post(self, request, **kwargs):
+        user = kwargs['user']
+        token = kwargs['token']
         new_token = None
         if token:
             token = {'token': token}
@@ -185,6 +186,7 @@ class NewBlogView(View):
             if data:
                 user = data['user']
                 new_token = data['token']
+                request.session["jwt"] = new_token
         
         params = {'owner': user.get('id')}
         blogs = get_blogs(params)
@@ -206,7 +208,6 @@ class NewBlogView(View):
                 'blog': form.cleaned_data.get('blogs')
 
             }
-            print(data)
             create_post(file, data)
             return redirect('index')
 

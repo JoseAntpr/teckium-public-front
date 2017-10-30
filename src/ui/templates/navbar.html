@@ -1,3 +1,4 @@
+{% load i18n %}
 <nav class="navbar navbar-expand-lg navbar-teckium">
   <a class="navbar-brand logo" href="{% url 'index' %}">Teckium</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,17 +22,17 @@
 
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
-          <a class="dropdown-item" href="{% url 'new-post' %}">New post</a>
-          <a class="dropdown-item" href="{% url 'logout' %}">Cerrar</a>
+          <a class="dropdown-item" href="{% url 'profile' %}">{% trans "Profile" %}</a>
+          <a class="dropdown-item" href="{% url 'new-post' %}">{% trans "New post" %}</a>
+          <a class="dropdown-item" href="{% url 'logout' %}"> {% trans "Cerrar" %}</a>
         </div>
       </li>
       {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Login</a>
+            <a class="nav-link" href="{% url 'login' %}">{% trans "Login" %}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'signin' %}">Signin</a>
+            <a class="nav-link" href="{% url 'signin' %}">{%trans "Signin" %}</a>
         </li>
       {% endif%}
     </ul>

@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if posts %}
 <section class="row section-post">
     <!-- Post -->
@@ -22,18 +23,15 @@
                     </a>
                 </div>
             </header>
-            <a href="#" class="image featured">
+            <a href="{% url 'post-detail' blog_pk=post.blog.id post_pk=post.id %}" class="image featured">
                 <img src={% if post.image %} {{post.image}} {% else %} "http://lorempixel.com/400/200/sports/" {% endif %} alt="" />
             </a>
-            <p>{% if post.content %} {{post.content}} {% else %} Mauris neque quam, fermentum ut nisl vitae, convallis maximus
-                nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus
-                at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae
-                justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. {% endif %} </p>
+            <p>{{post.content}}</p>
             <footer>
 
                 <ul class="actions">
                     <li>
-                        <a href="#" class="button big">Continue Reading</a>
+                        <a href="{% url 'post-detail' blog_pk=post.blog.id post_pk=post.id %}" class="button big">{% trans "Continue Reading" %}</a>
                         {% if user.id == post.owner.id %}
                         <a href="{% url 'edit-post' post_pk=post.id %}" class="btn btn-primary btn-xs">
                             <span class="fa fa-pencil"></span>
@@ -72,19 +70,19 @@
 
     {% endfor %}
     <div class="ui-error">
-        Se ha producido un error.
+        {% trans "An error has occurred" %}
     </div>
     <div class="ui-blank">
-        <p>Aún no hay ningún posts.</p>
+        <p>{%trans "No posts yet" %}</p>
     </div>
     <div class="ui-loading">
-        Cargando...
+       {% trans "loading..." %} 
     </div>
 </section>
 
 
 {% else %}
-<p>Este Blog no tiene ningún artículo.</p>
+<p>{% trans "This blog has no articles" %}</p>
 
 {% endif %}
 

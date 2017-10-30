@@ -1,6 +1,7 @@
+{% load i18n %}
 <div class="comment-container">
 
-    <h3>Comentarios</h3>
+    <h3>{% trans "Comments" %}</h3>
 
     {% if user%}
 
@@ -9,7 +10,7 @@
         <div class="form-group">
             {{ form.content.errors }} {{ form.content }}
         </div>
-        <button type="submit" class="btn btn-primary">Publicar</button>
+        <button type="submit" class="btn btn-primary"> {% trans "Publish" %}</button>
     </form>
     <section class="section-comments">
         {% endif %} {%for comment in comments %}
@@ -24,7 +25,7 @@
                     </div>
                     {% if user.id == comment.owner.id %}
                     <a id="button_delete" href="{% url 'delete-comment' blog_pk=post.blog.id post_pk=post.id comment_pk=comment.id %}" class="btn btn-danger button-delete"
-                        name="button-delete"> Borrar</a>
+                        name="button-delete"> {% trans "Delete" %}</a>
                     {% endif %}
                 </div>
                 <div class="content">
@@ -36,8 +37,7 @@
         {% endfor %}
     </section>
 
-    <button id="loadComments" class="btn btn-primary load-comments" value="{{post.id}}"> Cargar más comentarios</button>
-
+    <button id="loadComments" class="btn btn-primary load-comments" value="{{post.id}}"> {% trans 'Load more comments'%}</button>
     <script type="text/javascript"> 
         let user = "{{ user.id }}";
         let blog = "{{ post.blog.id }}";

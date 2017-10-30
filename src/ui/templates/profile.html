@@ -1,20 +1,19 @@
 {% extends 'base.html' %} 
+{% load i18n %}
 {% block content %}
-<h2>Profile</h2>
-
 <div class="row ">
     <div class="col-12">
         <div class="rela-block profile-card">
             <div><img src={% if user.profile.avatar %}{{ user.profile.avatar }} {% else %} "https://www.accountingweb.co.uk/sites/all/modules/custom/sm_pp_user_profile/img/default-user.png" {% endif %} class="rounded-circle profile-pic" /></div>
                 <div class="rela-block profile-name-container">
                     <div class="rela-block user-name" id="user_name">{% if user.first_name and user.last_name %}{{ user.first_name | capfirst }} {{ user.last_name | capfirst }}{% else %} {{ user.username | capfirst }} {% endif %}</div>
-                    <div class="rela-block user-desc" id="user_description">{% if user.profile.bio %}{{ user.profile.bio }} {% else %} No hay biografía {% endif %}</div>
+                    <div class="rela-block user-desc" id="user_description">{% if user.profile.bio %}{{ user.profile.bio }} {% else %} {% trans "No biography "%} {% endif %}</div>
                 </div>
                 <div class="rela-block profile-card-stats">
-                    <div class="floated profile-stat works" id="num_works">28<br><p class="element">posts</p> </div>
-                    <div class="floated profile-stat works" id="num_blogs">1<br><p class="element">blogs</p> </div>
-                    <div class="floated profile-stat followers" id="num_followers">112<br><p class="element">followers</p></div>
-                    <div class="floated profile-stat following" id="num_following">245<br><p class="element">following</p></div>
+                    <div class="floated profile-stat works" id="num_works">28<br><p class="element">{% trans "posts" %}</p> </div>
+                    <div class="floated profile-stat works" id="num_blogs">1<br><p class="element">{% trans "blogs" %}</p> </div>
+                    <div class="floated profile-stat followers" id="num_followers">112<br><p class="element">{% trans "followers" %}</p></div>
+                    <div class="floated profile-stat following" id="num_following">245<br><p class="element">{% trans "following" %}</p></div>
                 </div>
         </div>
     </div>
@@ -75,7 +74,9 @@
 
 <br>
 
-<h2>Posts</h2>
+<div class="borderBottomLighter mb-5">
+    <h1>{% trans "Your posts" %}</h1>
+</div>
 
 {% include './blogs/list_blog.html'%}
 

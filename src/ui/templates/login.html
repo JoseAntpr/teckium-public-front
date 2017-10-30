@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load i18n %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -35,7 +36,7 @@
         {{ field }}
       {% endfor %}
       <button>login</button>
-      <p class="message">Not registered? <a href="{% url 'signin' %}">Create an account</a></p>
+      <p class="message">{% trans "Not registered?" %}<a href="{% url 'signin' %}">{% trans "Create an account" %}</a></p>
     </form>
   </div>
 </div>
