@@ -1,4 +1,5 @@
 const date = require('./date');
+const likes = require('./likes');
 
 $(window).scroll(function () {
     if($(window).scrollTop() + $(window).height() == $(document).height()) {
@@ -73,7 +74,7 @@ var postsListManager = {
             html += '                <footer>'
             html += '                    <ul class="actions">'
             html += '                        <li>'
-            html += '                            <a href="#" class="button big">Continue Reading</a>'
+            html += '                            <a href="/'+post.blog.id+'/'+post.id +'" class="button big">Continue Reading</a>'
                                                  if(user == post.owner.id){
                                                     html += '<a href="/edit-post/' + post.id +'" class="btn btn-primary btn-xs"><span class="fa fa-pencil"></span></a>'
                                                     html += '<a href="/delete-post/' + post.id +'" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>'
@@ -85,9 +86,19 @@ var postsListManager = {
                                             html +='<li><a href="#">'+ tag.name +'</a></li>'
                                         })
             html += '                        <li>'
-            html += '                            <button class="btn btn-link">'
-            html += '                                <i class="fa fa-bookmark" aria-hidden="true"> 7</i>'
-            html += '                            </button>'
+            html += '                            <button id="' + post.id + '" class="btn btn-link favourite-button" value="[' + post.likes + ']" data-action="'
+                                                    if (user.id in post.likes){
+                                                        html += 'unvote">'
+                                                    }else {
+                                                        html += 'upvote">'
+                                                    } 
+                                                    if (user.id in post.likes){
+                                                        html += '<i class="fa fa-heart" aria-hidden="true">'+ post.likes.length +'</i>'
+                                                    }else{
+                                                        html += '<i class="fa fa-heart-o" aria-hidden="true">'+ post.likes.length +'</i>'
+                                                    }
+                                                    
+                                                 html += '</button>'
             html += '                            <button class="btn btn-link">'
             html += '                                <i class="fa fa-comments" aria-hidden="true"> 8</i>'
             html += '                            </button>'
@@ -98,6 +109,9 @@ var postsListManager = {
             html += '        </div>'
         }
         $(".section-post").append(html);
+        $('.favourite-button').on("click", function(){
+            likes.clickLike($(this));
+        });
     }
 }
 

@@ -20,6 +20,8 @@ module.exports = {
                 }
             });
         }
+
+        postListManager.setUiIdeal()
         
     }
 
