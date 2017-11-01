@@ -52,13 +52,13 @@ def create_user(data):
         return None
 
 
-def get_profile(user_id):
+def get_profile(user_id, token):
     """
     Consulta el API y obtiene los valores del perfil del usuario
     :return: Json recibido
     """
     try:
-        r = requests.get(settings.INFO_API.get("url") + settings.INFO_API.get("version") + 'users/' + user_id)
+        r = requests.get(settings.INFO_API.get("url") + settings.INFO_API.get("version") + 'users/' + user_id, headers={'Authorization': 'JWT ' + token})
         if r.status_code == 200:
             configuration = r.json()
             return json.dumps(configuration, indent=4)
@@ -68,7 +68,7 @@ def get_profile(user_id):
         return None
 
 
-def put_profile(user_id, file, json):
+def put_profile(user_id, file, json, token):
     """
     Actualiza los valores del perfil del usuario
     :param json: Archivo json con la configuración del recomendador
@@ -79,9 +79,9 @@ def put_profile(user_id, file, json):
 
     try:
         if file.get('profile.avatar'):
-            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "users/" + str(user_id) + "/", files=file, data=json)
+            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "users/" + str(user_id) + "/", files=file, data=json, headers={'Authorization': 'JWT ' + token})
         else:
-            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "users/" + str(user_id) + "/", data=json)
+            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "users/" + str(user_id) + "/", data=json, headers={'Authorization': 'JWT ' + token})
         if r.status_code == 200:
             return r.status_code
         else:

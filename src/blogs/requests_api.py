@@ -19,6 +19,7 @@ def get_posts(filters, *argv):
     except requests.exceptions.ConnectionError:
         return None
 
+
 def get_post(post_pk):
     '''
     Se envian los filtros a la llamada al API status=2
@@ -35,6 +36,7 @@ def get_post(post_pk):
     except requests.exceptions.ConnectionError:
         return None
 
+
 def get_comments(filters):
     try:
         r = requests.get(settings.INFO_API.get("url") + settings.INFO_API.get("version") + 
@@ -46,10 +48,11 @@ def get_comments(filters):
     except requests.exceptions.ConnectionError:
         return None
 
-def create_comment(data):
+
+def create_comment(data, token):
     try:
         r = requests.post(settings.INFO_API.get("url") + settings.INFO_API.get("version") + 
-                         "comments/", data=data)
+                         "comments/", data=data, headers={'Authorization': 'JWT ' + token})
         if not r.status_code == 201:
             return None
     
@@ -57,10 +60,11 @@ def create_comment(data):
     except requests.exceptions.ConnectionError:
         return None
 
-def delete_comment(comment_pk):
+
+def delete_comment(comment_pk, token):
     try:
         r = requests.delete(settings.INFO_API.get("url") + settings.INFO_API.get("version") + 
-                         "comments/" + comment_pk + "/")
+                         "comments/" + comment_pk + "/", headers={'Authorization': 'JWT ' + token})
         if not r.status_code == 201:
             return None
     
@@ -99,12 +103,14 @@ def get_blogs(filters):
     except requests.exceptions.ConnectionError:
         return None
 
-def create_post(file, data):
+
+def create_post(file, data, token):
+    print(token)
     try:
         if file.get('image'):
-             r = requests.post(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "posts/", files=file, data=data)
+             r = requests.post(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "posts/", headers={'Authorization': 'JWT ' + token}, files=file, data=data)
         else:
-             r = requests.post(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "posts/", data=data)
+             r = requests.post(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "posts/", headers={'Authorization': 'JWT ' + token}, data=data)
         if r.status_code == 201:
             return r.status_code
         else:
@@ -114,7 +120,7 @@ def create_post(file, data):
         return None
 
 
-def put_post(post_id, file, json):
+def put_post(post_id, file, json, token):
     """
     Actualiza los valores de un post
     :param json: Archivo json con la configuración del recomendador
@@ -124,9 +130,9 @@ def put_post(post_id, file, json):
 
     try:
         if file.get('image'):
-            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "posts/" + str(post_id) + "/", files=file, data=json)
+            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "posts/" + str(post_id) + "/", files=file, data=json, headers={'Authorization': 'JWT ' + token})
         else:
-            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "posts/" + str(post_id) + "/", data=json)
+            r = requests.put(settings.INFO_API.get("url") + settings.INFO_API.get("version") + "posts/" + str(post_id) + "/", data=json, headers={'Authorization': 'JWT ' + token})
         if r.status_code == 200:
             return r.status_code
         else:
@@ -135,10 +141,10 @@ def put_post(post_id, file, json):
         return None
 
 
-def delete_post(post_pk):
+def delete_post(post_pk, token):
     try:
         r = requests.delete(settings.INFO_API.get("url") + settings.INFO_API.get("version") +
-                            "posts/" + post_pk + "/")
+                            "posts/" + post_pk + "/", headers={'Authorization': 'JWT ' + token})
         if not r.status_code == 201:
             return None
 

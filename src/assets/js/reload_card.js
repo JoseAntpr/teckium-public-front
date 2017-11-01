@@ -119,7 +119,7 @@ var postsListManager = {
 var postservice = {
     // recuperar todos los posts
     list: function (successCallback, errorCallback) {
-        if (url && url != "None"){
+        if (typeof url !== 'undefined' && url && url != "None"){
             $.ajax({
                 url: url,
                 type: "get", // recuperar datos en una API REST

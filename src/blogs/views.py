@@ -93,7 +93,7 @@ class DetailView(View):
             data = {'content': form.cleaned_data.get('content'),
                     'owner.username': user.get('username'),
                     'post': post_pk}
-            create_comment(data)
+            create_comment(data, new_token)
 
         params = {"post": post_pk}
         post = get_post(post_pk)
@@ -114,8 +114,8 @@ class DetailView(View):
 
 class DeleteComment(View):
     @method_decorator(jwt_required)
-    def get(self, request, blog_pk, post_pk, comment_pk):
-        delete_comment(comment_pk)
+    def get(self, request, blog_pk, post_pk, comment_pk, **kwargs):
+        delete_comment(comment_pk, kwargs['token'])
         return HttpResponseRedirect(reverse('post-detail', args=[blog_pk, post_pk]))
 
         
@@ -208,7 +208,7 @@ class NewBlogView(View):
                 'blog': form.cleaned_data.get('blogs')
 
             }
-            create_post(file, data)
+            create_post(file, data, new_token)
             return redirect('index')
 
         context = {
@@ -281,7 +281,7 @@ class EditPostView(View):
                 'blog': form.cleaned_data.get('blogs')
 
             }
-            put_post(post_pk, file, data)
+            put_post(post_pk, file, data, new_token)
             return HttpResponseRedirect(reverse('post-detail', args=[post.get('blog').get('id'), post_pk]))
 
         context = {
@@ -307,7 +307,7 @@ class DeletePost(View):
                 new_token = data['token']
                 request.session["jwt"] = new_token
 
-        delete_post(post_pk)
+        delete_post(post_pk, new_token)
 
         params = {'status': 2}
         posts = get_posts(params)

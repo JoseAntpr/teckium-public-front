@@ -2,12 +2,12 @@ const $ = require('jquery');
 
 module.exports = {
     list: function(successCallBack, errorCallBack){
-        if (url){
+        if (urlcomments){
             $.ajax({
-                url: url,
+                url: urlcomments,
                 type: "get",
                 success: function(data){
-                    url = data.next;
+                    urlcomments = data.next;
                     successCallBack(data);
                 },
                 error: function(error){

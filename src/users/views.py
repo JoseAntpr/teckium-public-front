@@ -193,7 +193,7 @@ class ProfileView(View):
             }
             context['profile.bio'] = profileForm.cleaned_data.get('bio')
 
-            result = put_profile(user.get('id'), file, context)
+            result = put_profile(user.get('id'), file, context, kwargs['token'])
 
             if result:
                 messages.success(request, "Se ha actualizado correctamente.")

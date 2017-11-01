@@ -53,12 +53,12 @@ const $ = require('jquery');
 
 module.exports = {
     list: function(successCallBack, errorCallBack){
-        if (url){
+        if (urlcomments){
             $.ajax({
-                url: url,
+                url: urlcomments,
                 type: "get",
                 success: function(data){
-                    url = data.next;
+                    urlcomments = data.next;
                     successCallBack(data);
                 },
                 error: function(error){
@@ -331,7 +331,7 @@ var postsListManager = {
 var postservice = {
     // recuperar todos los posts
     list: function (successCallback, errorCallback) {
-        if (url && url != "None"){
+        if (typeof url !== 'undefined' && url && url != "None"){
             $.ajax({
                 url: url,
                 type: "get", // recuperar datos en una API REST
