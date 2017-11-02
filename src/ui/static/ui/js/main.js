@@ -316,7 +316,7 @@ var postsListManager = {
                                                     
                                                  html += '</button>'
             html += '                            <button class="btn btn-link">'
-            html += '                                <i class="fa fa-comments" aria-hidden="true"> 8</i>'
+            html += '                                <i class="fa fa-comments" aria-hidden="true">'+ post.comments.length +'</i>'
             html += '                            </button>'
             html += '                        </li>'
             html += '                    </ul>'

@@ -37,7 +37,10 @@
         {% endfor %}
     </section>
 
-    <button id="loadComments" class="btn btn-primary load-comments" value="{{post.id}}"> {% trans 'Load more comments'%}</button>
+    {% if next %}
+        <button id="loadComments" class="btn btn-primary load-comments" value="{{post.id}}"> {% trans 'Load more comments'%}</button>
+    {% endif %}
+    
     <script type="text/javascript"> 
         let user = "{{ user.id }}";
         let blog = "{{ post.blog.id }}";
