@@ -36,7 +36,8 @@ class IndexView(View):
             'posts': posts['results'],
             'tags': tags['results'],
             'next': posts['next'],
-            'user': user
+            'user': user,
+            'token': new_token
         }
 
         if new_token:
@@ -69,7 +70,8 @@ class DetailView(View):
             'user': user,
             'comments': comments['results'],
             'next': comments['next'],
-            'form':  CommentForm()
+            'form':  CommentForm(),
+            'token': new_token
         }
 
         if new_token:
@@ -106,7 +108,8 @@ class DetailView(View):
             'user': user,
             'comments': comments['results'],
             'next': comments['next'],
-            'form':  CommentForm()
+            'form':  CommentForm(),
+            'token': new_token
         }
             
         return render(request, "blogs/detail.html", context)
@@ -141,7 +144,8 @@ class PostByCategoryView(View):
             'posts': posts['results'],
             'tags': tags['results'],
             'user': user,
-            'tag': tag
+            'tag': tag,
+            'token': new_token
         }
 
         if new_token:
@@ -170,7 +174,8 @@ class NewBlogView(View):
         context = {
             'tags': tags['results'],
             'user': user,
-            'form': PostForm(tags=tags['results'], blogs=blogs['results'])
+            'form': PostForm(tags=tags['results'], blogs=blogs['results']),
+            'token': new_token
         }
 
         return render(request, "blogs/new-blog.html", context)
@@ -214,7 +219,8 @@ class NewBlogView(View):
         context = {
             'tags': tags['results'],
             'user': user,
-            'form': PostForm(tags=tags['results'], blogs=blogs['results'])
+            'form': PostForm(tags=tags['results'], blogs=blogs['results']),
+            'token': new_token
         }
         return render(request, "blogs/new-blog.html", context)
 
